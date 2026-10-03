@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendContactEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   try {
@@ -40,27 +41,8 @@ export async function POST(request: Request) {
       timestamp: new Date().toISOString(),
     };
 
-    // If an optional Resend API key is configured in production environment variables:
-    if (process.env.RESEND_API_KEY) {
-      try {
-        await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-          },
-          body: JSON.stringify({
-            from: process.env.CONTACT_FROM_EMAIL || "portfolio@nawabshaikh.dev",
-            to: process.env.CONTACT_TO_EMAIL || "nawabshaikh0518@gmail.com",
-            reply_to: payload.email,
-            subject: `[Portfolio Inquiry] ${payload.subject} from ${payload.name}`,
-            text: `Name: ${payload.name}\nEmail: ${payload.email}\nSubject: ${payload.subject}\nTime: ${payload.timestamp}\n\nMessage:\n${payload.message}`,
-          }),
-        });
-      } catch (emailErr) {
-        console.error("Resend dispatch error (proceeding with fallback):", emailErr);
-      }
-    }
+    // Dispatch email via Resend or Gmail SMTP (or mock simulation in local development)
+    const result = await sendContactEmail(payload);
 
     // If an optional Webhook (Slack / Discord / Zapier) is configured:
     if (process.env.CONTACT_WEBHOOK_URL) {
@@ -77,26 +59,31 @@ export async function POST(request: Request) {
       }
     }
 
-    // Production log
-    console.log("[Contact Submission Received]", {
-      from: payload.email,
-      name: payload.name,
-      subject: payload.subject,
-      timestamp: payload.timestamp,
-    });
+    if (!result.success && result.error) {
+      console.warn("Email service encountered an issue:", result.error);
+      // Still return 200 with clear notification if it failed so recruiter can copy direct email
+      return NextResponse.json(
+        {
+          success: true,
+          message:
+            "Thank you! Your message was received and logged. Feel free to also email directly at nawabshaikh0518@gmail.com.",
+        },
+        { status: 200 }
+      );
+    }
 
     return NextResponse.json(
       {
         success: true,
         message:
-          "Thank you! Your message has been received. Nawab will respond to you shortly.",
+          "Thank you! Your message has been sent successfully. Nawab will respond to you shortly.",
       },
       { status: 200 }
     );
   } catch (error) {
     console.error("Error processing contact form:", error);
     return NextResponse.json(
-      { error: "Failed to send message. Please reach out directly via nawabshaikh0518@gmail.com" },
+      { error: "Failed to process message. Please reach out directly via nawabshaikh0518@gmail.com" },
       { status: 500 }
     );
   }
