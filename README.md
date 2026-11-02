@@ -1,88 +1,86 @@
-# Nawab Shaikh — Portfolio Website
+# Nawab Shaikh — Personal Engineering Portfolio
 
-> **Full-Stack & AI-Integration Engineer**  
-> *Django · Python · OpenAI/Gemini · Celery · Redis · Docker · AWS · React*
-
-A high-performance personal portfolio engineered specifically to present ~5 years of software engineering progression, production LLM integration, distributed worker architectures, and cloud deployments to hiring managers and recruiters.
+A production-grade personal portfolio built with **Next.js 15 (App Router)**, **TypeScript**, and **Tailwind CSS**. Designed with a typography-first editorial aesthetic, zero AI slop, zero fabricated metrics, and rigorous technical case studies.
 
 ---
 
-## 🚀 Key Highlights & Architecture
+## 🧭 Design Philosophy
 
-- **Next.js 15 (App Router)** + **React 19** + **TypeScript**
-- **Tailwind CSS** with a restrained, high-contrast monochrome design system (WCAG AA/AAA compliant)
-- **JSON-LD `Person` Schema** + OpenGraph + Twitter Cards + `robots.txt` + `sitemap.xml` for full search engine indexing
-- **Interactive Career Progression** (Apprentice → Intern → SWE Web → AI Engineer & MLOps)
-- **3 Deep Engineering Case Studies**: *SentimentSphere*, *SkillSphere*, *RigSmith*
-- **Embedded Interactive Contact Form** with server-side validation (`/api/contact`) and optional email/webhook dispatch
-- **Integrated CV / Resume Preview Modal** with print support and direct PDF download
+- **Zero AI Slop**: No purple/blue gradient blobs, no floating cards without purpose, no fake terminal decorations, no glowing orbs, and no generic marketing copy.
+- **Typography-First & Editorial**: Deep matte palette (`#0B0C0E`), crisp 1px borders, monospace metadata kickers, and clear hierarchy.
+- **Architectural Depth**: Interactive system architecture viewer showcasing data lifecycles, database entities, and engineering trade-offs.
+- **Verified Authenticity**: Every claim, milestone, and technical contribution is grounded in real source code, repositories, and verified records.
 
 ---
 
-## 🛠️ Local Development
+## 🚀 Featured Projects & Systems
 
-### 1. Prerequisites
-- Node.js `20.x` or later
-- npm or pnpm
+1. **[RigSmith](https://github.com/NARS77/RigSmith)** — Full-Stack PC Builder & Multidimensional Compatibility Engine
+   - *Stack*: React 18, Vite 6, Django 5.x, Django REST Framework, PostgreSQL, Docker, SVG component schematics.
+   - *Architecture*: Rule-based multi-attribute compatibility engine, dynamic GPU transient wattage curve calculation, and live interactive SVG chassis blueprints.
+2. **[SentimentSphere](https://github.com/NARS77/SentimentSphere)** — AI-Powered Customer Feedback Intelligence Platform
+   - *Stack*: Python 3.12, Django 5.2, Django REST Framework, PostgreSQL, OpenAI API (v1.12), TextBlob, Pandas, Highcharts.
+   - *Architecture*: Dual-layer NLP pipeline (TextBlob lexical scoring + OpenAI prompt template engine) with asynchronous batch state machines.
+3. **Cruxx AI — Production Full-Stack Engineering** (Verified Internship, Sept 2024 – May 2025)
+   - *Stack*: React, Django, Python, PostgreSQL, REST APIs.
+   - *Contributions*: Production feature delivery, authenticated endpoints, and database query optimization.
+4. **EchoTrace** — AI-Powered Meeting Memory & Structured Synthesis (Prototype / Active Dev)
+   - *Stack*: Python, OpenAI Whisper, GPT-4o / LLM APIs, Next.js, PostgreSQL.
+5. **[SkillSphere](https://github.com/NARS77/SkillsSphere)** — Role-Based Learning Management Architecture
+   - *Stack*: Django, Django REST Framework, PostgreSQL, Bootstrap.
 
-### 2. Installation
+---
+
+## 🛠️ Technology Stack
+
+- **Framework**: [Next.js 15.5](https://nextjs.org/) (App Router, Server Components & Static Site Generation)
+- **Language**: TypeScript 5.7 (Strict Mode)
+- **Styling**: Tailwind CSS 3.4 (Custom semantic tokens)
+- **Icons**: Lucide React + Custom SVG Brand Nodes
+- **SEO & Structured Data**: JSON-LD Person & WebSite schema, OpenGraph, `robots.ts`, and `sitemap.ts`
+- **Verified Assets**: Pre-bundled `/public/resume.pdf` (184 KB) and `/public/cruxx_experience_letter.pdf` (550 KB)
+
+---
+
+## 💻 Local Development
+
 ```bash
-git clone <your-repo-url> nawab-portfolio
-cd nawab-portfolio
+# 1. Install dependencies
 npm install
-```
 
-### 3. Run Development Server
-```bash
+# 2. Start development server
 npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 4. Build for Production
-```bash
+# 3. Compile optimized production build
 npm run build
+
+# 4. Run production server
 npm run start
 ```
 
 ---
 
-## 🌐 Production Deployment Options
+## 🌐 Deployment Instructions
 
-### Option A: Vercel (Recommended — 2 minutes)
-1. Push this repository to GitHub or GitLab.
-2. Go to [Vercel](https://vercel.com) and click **"Add New Project"**.
-3. Import this repository.
-4. Next.js will be detected automatically. Leave the build settings as default (`npm run build`).
-5. (Optional) In **Environment Variables**, add:
-   - `RESEND_API_KEY`: *(Optional)* Your Resend key to receive contact emails directly in your inbox.
-   - `CONTACT_TO_EMAIL`: `nawabshaikh0518@gmail.com`
-6. Click **Deploy**.
+### Vercel (Recommended)
+1. Push this repository to GitHub (`NARS77/Nawab_portfolio5x`).
+2. Import the project into [Vercel](https://vercel.com).
+3. Framework Preset: **Next.js**.
+4. Deploy! (Static pages and dynamic routes pre-render automatically).
 
----
-
-### Option B: Docker Container (AWS ECS / EC2 / Cloud Run)
-A production-ready multi-stage `Dockerfile` with minimal Alpine image and standalone output is included:
-
+### Docker / Standalone Container
 ```bash
-# Build the Docker image
-docker build -t nawab-portfolio:latest .
-
-# Run container on port 3000
-docker run -p 3000:3000 nawab-portfolio:latest
+docker build -t nawab-portfolio .
+docker run -p 3000:3000 nawab-portfolio
 ```
 
 ---
 
-## ⚙️ Environment Variables (Optional)
+## 📬 Contact Information
 
-| Variable | Description | Default |
-|---|---|---|
-| `RESEND_API_KEY` | Resend API key to forward contact form inquiries to email | *None (logs to server)* |
-| `CONTACT_TO_EMAIL` | Destination email for contact messages | `nawabshaikh0518@gmail.com` |
-| `CONTACT_FROM_EMAIL` | Verified sender email for Resend | `portfolio@nawabshaikh.dev` |
-| `CONTACT_WEBHOOK_URL` | Webhook URL (Slack/Discord) for instant inquiry notifications | *None* |
-
----
-
-## 📄 License
-MIT &copy; Nawab Shaikh
+- **Name**: Nawab Shaikh (Nawab Rahim Shaikh)
+- **Email**: `nawabshaikh1014@gmail.com`
+- **Phone**: `+91 7620436307`
+- **Location**: Mira Road, Maharashtra, India (Open to relocation & remote roles)
+- **GitHub**: [github.com/NARS77](https://github.com/NARS77)
+- **LinkedIn**: [linkedin.com/in/nars77](https://linkedin.com/in/nars77)

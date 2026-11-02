@@ -1,339 +1,300 @@
 "use client";
 
-import { useState } from "react";
-import { profileData } from "@/data/profile";
+import React, { useState } from "react";
+import { profile } from "@/data/profile";
 import {
   Mail,
   Copy,
   Check,
+  Phone,
+  ArrowDownToLine,
   Send,
-  MapPin,
-  Clock,
   MessageSquare,
-  AlertCircle,
-  ArrowUpRight,
 } from "lucide-react";
-import { LinkedinIcon, GithubIcon } from "@/components/icons";
+import { GithubIcon, LinkedinIcon } from "@/components/icons";
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "AI Engineering Opportunity",
-    message: "",
-  });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
-  const [statusMessage, setStatusMessage] = useState("");
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
+
+  const [submitting, setSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(profileData.email);
+    navigator.clipboard.writeText(profile.email);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
-    setStatusMessage("");
+    if (!formData.email || !formData.message) return;
 
+    setSubmitting(true);
     try {
-      const response = await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `Portfolio Inquiry from ${formData.name || "Engineering Recruiter"}`,
+        }),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setStatus("success");
-        setStatusMessage(
-          data.message || "Message sent successfully! Nawab will be in touch shortly."
-        );
-        setFormData({
-          name: "",
-          email: "",
-          subject: "AI Engineering Opportunity",
-          message: "",
-        });
+      const data = await res.json();
+      if (res.ok) {
+        setSuccessMessage(data.message || "Your message has been received.");
+        setSent(true);
       } else {
-        setStatus("error");
-        setStatusMessage(
-          data.error || "Failed to send message. Please email directly."
-        );
+        throw new Error(data.error || "Submission error");
       }
-    } catch (err) {
-      setStatus("error");
-      setStatusMessage(
-        "Network connection issue. Please use the direct mail link below."
+    } catch {
+      // Graceful fallback to direct mailto
+      const subject = encodeURIComponent(
+        `Portfolio Inquiry from ${formData.name || "Engineering Recruiter"}`
       );
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      );
+      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      setSuccessMessage(
+        "Direct email client triggered. You can also email directly at " + profile.email
+      );
+      setSent(true);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className="py-24 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-20 md:py-28 border-b border-border-subtle">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="flex items-center gap-2 font-mono text-xs text-zinc-400 uppercase tracking-widest mb-3">
-            <span className="h-px w-6 bg-zinc-600" />
-            <span>08 / Connect &amp; Inquiries</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest text-accent mb-2">
+              05 / Dispatch & Contact
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-content-primary">
+              Let&apos;s build something together.
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
-            Initiate a Conversation
-          </h2>
-          <p className="text-base sm:text-lg text-zinc-400 leading-relaxed">
-            Actively considering AI Engineering, AI Integration, MLOps, and Full-Stack Engineering roles.
-            Reach out directly or send a message via the form below.
+          <p className="text-xs sm:text-sm font-mono text-content-muted max-w-md">
+            Open to full-time engineering roles, relocation, and high-impact software projects.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Direct Channels Card (Col 1-5) */}
+        {/* Contact Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Direct Channels Card */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="rounded-xl border border-white/10 bg-zinc-900/30 p-6 sm:p-8 space-y-6">
-              <h3 className="text-lg font-bold font-mono text-white">
-                Direct Channels
-              </h3>
-
-              {/* Direct Email Box with 1-Click Copy */}
-              <div className="p-4 rounded-lg border border-white/10 bg-zinc-950/80">
-                <div className="text-xs font-mono text-zinc-400 mb-1 flex items-center justify-between">
-                  <span>Primary Email</span>
-                  <span className="text-[11px] text-zinc-400">Direct response</span>
+            <div className="p-6 rounded border border-border-subtle bg-bg-card space-y-6">
+              <div>
+                <div className="text-xs font-mono uppercase tracking-wider text-accent mb-1.5">
+                  Direct Inquiries
                 </div>
-                <div className="flex items-center justify-between gap-2 mt-1">
-                  <a
-                    href={`mailto:${profileData.email}`}
-                    className="text-sm font-mono text-zinc-200 hover:text-white transition-colors truncate"
-                  >
-                    {profileData.email}
-                  </a>
-                  <button
-                    onClick={handleCopyEmail}
-                    className="p-1.5 rounded border border-white/10 bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-colors shrink-0"
-                    title="Copy email to clipboard"
-                    aria-label="Copy email address"
-                  >
-                    {copied ? (
-                      <Check className="w-4 h-4 text-emerald-400" />
-                    ) : (
-                      <Copy className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
+                <p className="text-xs sm:text-sm text-content-secondary leading-relaxed">
+                  I typically respond within 24 hours. For urgent opportunities, reach out directly
+                  via email or phone.
+                </p>
               </div>
 
-              {/* LinkedIn Direct Link */}
-              <a
-                href={profileData.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-4 rounded-lg border border-white/10 bg-zinc-950/80 hover:border-white/20 transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded border border-white/10 bg-zinc-900 text-zinc-200 group-hover:text-white">
-                    <LinkedinIcon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-zinc-400">LinkedIn Profile</div>
-                    <div className="text-sm font-mono text-zinc-200 group-hover:text-white">
-                      linkedin.com/in/nawabshaikh18
-                    </div>
-                  </div>
+              {/* Email with 1-Click Copy */}
+              <div className="p-3.5 rounded bg-bg-subtle border border-border-subtle flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 overflow-hidden">
+                  <Mail className="w-4 h-4 text-accent shrink-0" />
+                  <a
+                    href={`mailto:${profile.email}`}
+                    className="text-xs sm:text-sm font-mono text-content-primary hover:text-accent truncate"
+                  >
+                    {profile.email}
+                  </a>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-zinc-200 transition-colors" />
-              </a>
 
-              {/* GitHub Link (Clearly marked placeholder) */}
-              <a
-                href={profileData.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-4 rounded-lg border border-white/10 bg-zinc-950/80 hover:border-white/20 transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded border border-white/10 bg-zinc-900 text-zinc-200 group-hover:text-white">
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  title="Copy email to clipboard"
+                  className="p-1.5 rounded hover:bg-bg-card text-content-secondary hover:text-content-primary border border-border-subtle shrink-0 transition-colors"
+                >
+                  {copied ? (
+                    <Check className="w-3.5 h-3.5 text-accent-signal" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5" />
+                  )}
+                </button>
+              </div>
+
+              {/* Phone Channel */}
+              <div className="p-3.5 rounded bg-bg-subtle border border-border-subtle flex items-center gap-3">
+                <Phone className="w-4 h-4 text-accent shrink-0" />
+                <a
+                  href={`tel:${profile.phone.replace(/\s+/g, "")}`}
+                  className="text-xs sm:text-sm font-mono text-content-primary hover:text-accent"
+                >
+                  {profile.phone}
+                </a>
+              </div>
+
+              {/* Verified Profile Links */}
+              <div className="pt-4 border-t border-border-subtle space-y-3 font-mono text-xs">
+                <a
+                  href={profile.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-2.5 rounded hover:bg-bg-subtle text-content-secondary hover:text-content-primary transition-colors"
+                >
+                  <span className="flex items-center gap-2">
                     <GithubIcon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-zinc-400">
-                      GitHub <span className="text-[10px] text-zinc-400">(Placeholder)</span>
-                    </div>
-                    <div className="text-sm font-mono text-zinc-200 group-hover:text-white">
-                      github.com/nawabshaikh-dev
-                    </div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-zinc-200 transition-colors" />
-              </a>
+                    <span>github.com/NARS77</span>
+                  </span>
+                  <span className="text-content-muted">›</span>
+                </a>
 
-              {/* Location & Timezone Card */}
-              <div className="pt-4 border-t border-white/[0.08] space-y-2 text-xs font-mono text-zinc-400">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-zinc-400" />
-                  <span>Location: Mumbai, Maharashtra, India</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-3.5 h-3.5 text-zinc-400" />
-                  <span>Timezone: Indian Standard Time (UTC +5:30)</span>
-                </div>
+                <a
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-2.5 rounded hover:bg-bg-subtle text-content-secondary hover:text-content-primary transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <LinkedinIcon className="w-4 h-4" />
+                    <span>linkedin.com/in/nars77</span>
+                  </span>
+                  <span className="text-content-muted">›</span>
+                </a>
+
+                <a
+                  href={profile.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="Nawab_Shaikh_Resume.pdf"
+                  className="flex items-center justify-between p-2.5 rounded hover:bg-bg-subtle text-content-secondary hover:text-content-primary transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <ArrowDownToLine className="w-4 h-4 text-accent" />
+                    <span>Verified Resume (PDF)</span>
+                  </span>
+                  <span className="text-content-muted">›</span>
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Embedded Contact Form (Col 6-12) */}
+          {/* Quick Message Form */}
           <div className="lg:col-span-7">
-            <div className="rounded-xl border border-white/10 bg-zinc-900/40 p-6 sm:p-8 backdrop-blur-sm">
-              <div className="flex items-center justify-between pb-6 border-b border-white/[0.08] mb-6">
-                <div>
-                  <h3 className="text-lg font-bold font-mono text-white">
-                    Send a Message
-                  </h3>
-                  <p className="text-xs text-zinc-400 font-mono mt-0.5">
-                    Messages are delivered directly to Nawab Shaikh.
-                  </p>
-                </div>
-                <MessageSquare className="w-5 h-5 text-zinc-400" />
+            <div className="p-6 sm:p-8 rounded border border-border-subtle bg-bg-card">
+              <div className="flex items-center gap-2 text-xs font-mono text-accent mb-1.5">
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Direct Message Dispatch</span>
               </div>
+              <h3 className="text-lg font-semibold text-content-primary mb-6">
+                Send a quick project briefing or interview invitation
+              </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Name field */}
+              {sent ? (
+                <div className="p-6 rounded bg-bg-subtle border border-accent-signal/40 text-center space-y-3">
+                  <div className="w-10 h-10 rounded-full bg-accent-signal/10 border border-accent-signal/30 text-accent-signal mx-auto flex items-center justify-center">
+                    <Check className="w-5 h-5" />
+                  </div>
+                  <div className="text-sm font-semibold text-content-primary">
+                    Message Dispatched
+                  </div>
+                  <p className="text-xs text-content-secondary max-w-sm mx-auto">
+                    {successMessage || (
+                      <>
+                        Your message has been processed for{" "}
+                        <span className="text-content-primary font-mono">{profile.email}</span>.
+                      </>
+                    )}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSent(false);
+                      setFormData({ name: "", email: "", message: "" });
+                    }}
+                    className="text-xs font-mono text-accent hover:underline pt-2"
+                  >
+                    Send another dispatch
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-xs font-mono text-content-muted mb-1.5"
+                      >
+                        Your Name
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Alex Miller"
+                        className="w-full px-3.5 py-2.5 rounded bg-bg border border-border-subtle text-content-primary text-xs sm:text-sm placeholder:text-content-dim focus:outline-none focus:border-accent"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block text-xs font-mono text-content-muted mb-1.5"
+                      >
+                        Your Email <span className="text-accent">*</span>
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="alex@company.com"
+                        className="w-full px-3.5 py-2.5 rounded bg-bg border border-border-subtle text-content-primary text-xs sm:text-sm placeholder:text-content-dim focus:outline-none focus:border-accent"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label
-                      htmlFor="name"
-                      className="block text-xs font-mono text-zinc-300 mb-1.5"
+                      htmlFor="message"
+                      className="block text-xs font-mono text-content-muted mb-1.5"
                     >
-                      Your Full Name <span className="text-zinc-400">*</span>
+                      Project Scope or Role Details <span className="text-accent">*</span>
                     </label>
-                    <input
-                      id="name"
-                      type="text"
+                    <textarea
+                      id="message"
+                      rows={5}
                       required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder="e.g. Sarah Jenkins"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-white/10 bg-zinc-950 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all font-mono"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Hi Nawab, we are looking for a software engineer to build..."
+                      className="w-full px-3.5 py-2.5 rounded bg-bg border border-border-subtle text-content-primary text-xs sm:text-sm placeholder:text-content-dim focus:outline-none focus:border-accent resize-none"
                     />
                   </div>
 
-                  {/* Email field */}
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-xs font-mono text-zinc-300 mb-1.5"
+                  <div className="pt-2 flex items-center justify-between">
+                    <span className="text-[11px] font-mono text-content-muted">
+                      Direct delivery to nawabshaikh1014@gmail.com
+                    </span>
+
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono font-medium text-bg bg-content-primary hover:bg-white px-5 py-2.5 rounded transition-colors focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
                     >
-                      Your Work Email <span className="text-zinc-400">*</span>
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      placeholder="sarah@company.com"
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-white/10 bg-zinc-950 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all font-mono"
-                    />
+                      <span>{submitting ? "Sending..." : "Send Message"}</span>
+                      <Send className="w-3.5 h-3.5" />
+                    </button>
                   </div>
-                </div>
-
-                {/* Inquiry Subject */}
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-xs font-mono text-zinc-300 mb-1.5"
-                  >
-                    Inquiry Role / Objective
-                  </label>
-                  <select
-                    id="subject"
-                    value={formData.subject}
-                    onChange={(e) =>
-                      setFormData({ ...formData, subject: e.target.value })
-                    }
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-white/10 bg-zinc-950 text-sm text-zinc-100 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all font-mono"
-                  >
-                    <option value="AI Engineering Opportunity">
-                      AI Engineering / AI Integration Opportunity
-                    </option>
-                    <option value="MLOps / Inference Engineering">
-                      MLOps / Inference Pipeline Role
-                    </option>
-                    <option value="Full-Stack / Backend Engineering">
-                      Full-Stack / Python Backend Role
-                    </option>
-                    <option value="Technical Advisory / Consulting">
-                      Technical Advisory / Consulting
-                    </option>
-                    <option value="General Engineering Inquiry">
-                      General Engineering Inquiry
-                    </option>
-                  </select>
-                </div>
-
-                {/* Message field */}
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-xs font-mono text-zinc-300 mb-1.5"
-                  >
-                    Message &amp; Role Details <span className="text-zinc-400">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    required
-                    rows={5}
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    placeholder="Provide context regarding the role, engineering challenges, tech stack, or scheduling availability..."
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-white/10 bg-zinc-950 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all font-mono resize-y"
-                  />
-                </div>
-
-                {/* Status messages */}
-                {status === "success" && (
-                  <div className="p-3.5 rounded-lg border border-emerald-500/30 bg-emerald-950/20 text-xs font-mono text-emerald-300 flex items-center gap-2">
-                    <Check className="w-4 h-4 shrink-0 text-emerald-400" />
-                    <span>{statusMessage}</span>
-                  </div>
-                )}
-
-                {status === "error" && (
-                  <div className="p-3.5 rounded-lg border border-red-500/30 bg-red-950/20 text-xs font-mono text-red-300 flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
-                    <span>{statusMessage}</span>
-                  </div>
-                )}
-
-                {/* Submit button */}
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-mono font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {status === "loading" ? (
-                    <>
-                      <div className="h-4 w-4 rounded-full border-2 border-zinc-950 border-t-transparent animate-spin" />
-                      <span>Sending message...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      <span>Send Direct Message</span>
-                    </>
-                  )}
-                </button>
-              </form>
+                </form>
+              )}
             </div>
           </div>
         </div>

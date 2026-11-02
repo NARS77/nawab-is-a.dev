@@ -16,7 +16,7 @@ export async function sendContactEmail(params: ContactEmailParams): Promise<{
   error?: string;
 }> {
   const { name, email, subject, message, timestamp } = params;
-  const recipient = process.env.CONTACT_TO_EMAIL || "nawabshaikh0518@gmail.com";
+  const recipient = process.env.CONTACT_TO_EMAIL || "nawabshaikh1014@gmail.com";
 
   const emailSubject = `[Portfolio Inquiry] ${subject} - from ${name}`;
   const textContent = `
@@ -121,7 +121,7 @@ ${message}
   // 2. Try Gmail SMTP if GMAIL_APP_PASSWORD is configured
   if (process.env.GMAIL_APP_PASSWORD) {
     try {
-      const user = process.env.GMAIL_USER || "nawabshaikh0518@gmail.com";
+      const user = process.env.GMAIL_USER || "nawabshaikh1014@gmail.com";
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {

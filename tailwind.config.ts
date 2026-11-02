@@ -10,44 +10,60 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#09090b",
-        surface: {
-          50: "#18181b",
-          100: "#141416",
-          200: "#0f0f11",
-          300: "#09090b",
+        bg: {
+          DEFAULT: "#0B0C0E",
+          subtle: "#111317",
+          elevated: "#171A21",
+          card: "#13161C",
         },
         border: {
           subtle: "rgba(255, 255, 255, 0.08)",
-          medium: "rgba(255, 255, 255, 0.16)",
-          strong: "rgba(255, 255, 255, 0.28)",
+          medium: "rgba(255, 255, 255, 0.14)",
+          strong: "rgba(255, 255, 255, 0.24)",
+        },
+        accent: {
+          DEFAULT: "#E59866", // Warm engineering terracotta / amber
+          subtle: "rgba(229, 152, 102, 0.12)",
+          signal: "#10B981", // Understated live indicator green
+        },
+        content: {
+          primary: "#F3F4F6",
+          secondary: "#9CA3AF",
+          muted: "#6B7280",
+          dim: "#4B5563",
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+        ],
+        mono: [
+          '"JetBrains Mono"',
+          '"SF Mono"',
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          '"Liberation Mono"',
+          "monospace",
+        ],
       },
       letterSpacing: {
-        tightest: "-0.04em",
-        tighter: "-0.025em",
-        tight: "-0.015em",
-      },
-      animation: {
-        "fade-in": "fadeIn 0.5s ease-out forwards",
-        "pulse-subtle": "pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        pulseSubtle: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.4" },
-        },
+        tighter: "-0.035em",
+        tight: "-0.02em",
+        normal: "0",
+        wide: "0.03em",
+        wider: "0.08em",
+        widest: "0.15em",
       },
     },
   },
   plugins: [],
 };
+
 export default config;

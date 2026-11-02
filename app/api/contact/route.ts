@@ -66,7 +66,7 @@ export async function POST(request: Request) {
         {
           success: true,
           message:
-            "Thank you! Your message was received and logged. Feel free to also email directly at nawabshaikh0518@gmail.com.",
+            "Thank you! Your message was received and logged. Feel free to also email directly at nawabshaikh1014@gmail.com.",
         },
         { status: 200 }
       );
@@ -83,7 +83,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error processing contact form:", error);
     return NextResponse.json(
-      { error: "Failed to process message. Please reach out directly via nawabshaikh0518@gmail.com" },
+      { error: "Failed to process message. Please reach out directly via nawabshaikh1014@gmail.com" },
       { status: 500 }
     );
   }

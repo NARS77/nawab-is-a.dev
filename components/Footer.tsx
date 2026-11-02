@@ -1,8 +1,9 @@
 "use client";
 
+import React from "react";
+import { profile } from "@/data/profile";
 import { ArrowUp, Mail } from "lucide-react";
-import { LinkedinIcon, GithubIcon } from "@/components/icons";
-import { profileData } from "@/data/profile";
+import { GithubIcon, LinkedinIcon } from "@/components/icons";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -10,75 +11,66 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-white/[0.08] bg-[#070708] py-12 text-zinc-400 font-mono text-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Left: Brand & Statement */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <div className="flex h-8 w-8 items-center justify-center rounded border border-white/15 bg-zinc-900 font-mono font-bold text-zinc-200">
-              NS
+    <footer className="py-12 bg-bg text-content-secondary border-t border-border-subtle">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-border-subtle">
+          <div>
+            <div className="text-sm font-semibold text-content-primary">
+              {profile.name}
             </div>
-            <div>
-              <div className="text-zinc-200 font-semibold">
-                Nawab Shaikh &bull; Portfolio
-              </div>
-              <div className="text-[11px] text-zinc-400">
-                Full-Stack &amp; AI-Integration Engineer &bull; Mumbai, India
-              </div>
+            <div className="text-xs font-mono text-content-muted mt-0.5">
+              Full-Stack Developer | AI Integration Engineer • India (Relocation Ready)
             </div>
           </div>
 
-          {/* Center: Social Links */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
             <a
-              href={`mailto:${profileData.email}`}
-              className="p-2 rounded border border-white/10 hover:border-white/20 text-zinc-400 hover:text-white transition-colors"
-              title="Email Nawab"
-              aria-label="Send Email"
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-content-primary transition-colors flex items-center gap-1.5"
             >
-              <Mail className="w-4 h-4" />
+              <GithubIcon className="w-3.5 h-3.5" />
+              <span>GitHub</span>
             </a>
 
             <a
-              href={profileData.linkedin}
+              href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded border border-white/10 hover:border-white/20 text-zinc-400 hover:text-white transition-colors"
-              title="LinkedIn Profile"
-              aria-label="LinkedIn Profile"
+              className="hover:text-content-primary transition-colors flex items-center gap-1.5"
             >
-              <LinkedinIcon className="w-4 h-4" />
+              <LinkedinIcon className="w-3.5 h-3.5" />
+              <span>LinkedIn</span>
             </a>
 
             <a
-              href={profileData.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded border border-white/10 hover:border-white/20 text-zinc-400 hover:text-white transition-colors"
-              title="GitHub Profile (Placeholder)"
-              aria-label="GitHub Profile"
+              href={`mailto:${profile.email}`}
+              className="hover:text-content-primary transition-colors flex items-center gap-1.5"
             >
-              <GithubIcon className="w-4 h-4" />
+              <Mail className="w-3.5 h-3.5" />
+              <span>Email</span>
             </a>
+
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="hover:text-content-primary transition-colors flex items-center gap-1 text-content-muted ml-2"
+              title="Return to top"
+            >
+              <span>Top</span>
+              <ArrowUp className="w-3.5 h-3.5" />
+            </button>
           </div>
-
-          {/* Right: Back to top */}
-          <button
-            onClick={scrollToTop}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded border border-white/10 hover:border-white/20 text-zinc-300 hover:text-white transition-colors"
-            aria-label="Back to top"
-          >
-            <span>Top of page</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-white/[0.04] text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-2 text-[11px] text-zinc-400">
+        <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] font-mono text-content-muted">
           <div>
-            &copy; {new Date().getFullYear()} Nawab Shaikh. Built with Next.js, TypeScript &amp; Tailwind CSS.
+            Built with Next.js & Tailwind CSS. Typography-first, zero AI slop.
           </div>
-          <div className="text-zinc-400">
-            Engineered for clarity, system credibility, and recruiter accessibility.
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-signal" />
+            <span>Timezone: IST (UTC+5:30) • India</span>
           </div>
         </div>
       </div>

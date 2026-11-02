@@ -1,22 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { profileData } from "@/data/profile";
-import {
-  Menu,
-  X,
-  FileText,
-  ArrowUpRight,
-  Terminal,
-} from "lucide-react";
-import { LinkedinIcon } from "@/components/icons";
+import { profile } from "@/data/profile";
+import { ArrowDownToLine, Menu, X, ArrowUpRight } from "lucide-react";
 
-interface NavbarProps {
-  onOpenResume?: () => void;
-}
-
-export default function Navbar({ onOpenResume }: NavbarProps) {
+export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -24,151 +13,122 @@ export default function Navbar({ onOpenResume }: NavbarProps) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "AI & MLOps", href: "#ai-mlops" },
-    { name: "Philosophy", href: "#philosophy" },
-    { name: "Stack", href: "#stack" },
-    { name: "Education", href: "#education" },
-    { name: "Contact", href: "#contact" },
+    { label: "Work", href: "#work" },
+    { label: "Approach", href: "#approach" },
+    { label: "Stack", href: "#stack" },
+    { label: "About", href: "#about" },
+    { label: "Contact", href: "#contact" },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         isScrolled
-          ? "bg-[#09090b]/90 backdrop-blur-md border-b border-white/[0.08] py-3 shadow-lg shadow-black/20"
+          ? "bg-[#0B0C0E]/90 backdrop-blur-md border-b border-border-subtle py-3.5"
           : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo / Monogram */}
-          <Link
-            href="/"
-            className="group flex items-center gap-3 text-zinc-100 hover:text-white transition-colors focus:outline-none"
-            aria-label="Nawab Shaikh - Home"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded border border-white/15 bg-zinc-900/80 font-mono text-sm font-semibold tracking-wider text-zinc-200 group-hover:border-white/30 transition-colors">
-              NS
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+        {/* Brand / Wordmark */}
+        <Link
+          href="/"
+          className="group flex items-center gap-3 text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+        >
+          <div className="w-8 h-8 rounded bg-bg-elevated border border-border-medium flex items-center justify-center font-mono text-sm font-semibold text-content-primary group-hover:border-accent transition-colors">
+            NS
+          </div>
+          <div>
+            <div className="text-sm font-semibold tracking-tight text-content-primary group-hover:text-accent transition-colors">
+              {profile.name}
             </div>
-            <div className="flex flex-col">
-              <span className="font-mono text-sm font-bold tracking-tight text-zinc-100 group-hover:text-white transition-colors">
-                NAWAB SHAIKH
-              </span>
-              <span className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-400">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                AI & Full-Stack SWE
-              </span>
+            <div className="text-[11px] font-mono text-content-muted hidden sm:block">
+              Full-Stack & AI Systems
             </div>
-          </Link>
+          </div>
+        </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 font-mono text-xs text-zinc-400">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="px-3 py-1.5 rounded text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/40 transition-colors duration-150"
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
-
-          {/* Quick Actions (Desktop) */}
-          <div className="hidden sm:flex items-center gap-2.5">
-            <button
-              onClick={onOpenResume}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded border border-white/15 bg-zinc-900 text-zinc-300 hover:text-white hover:border-white/30 hover:bg-zinc-800/80 transition-all duration-150"
-              title="View CV / Resume"
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>Resume</span>
-            </button>
-
+        {/* Desktop Navigation */}
+        <nav
+          aria-label="Primary"
+          className="hidden md:flex items-center gap-1 text-xs font-mono text-content-secondary"
+        >
+          {navLinks.map((link) => (
             <a
-              href={profileData.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded border border-white/15 bg-zinc-900 text-zinc-300 hover:text-white hover:border-white/30 hover:bg-zinc-800/80 transition-all duration-150"
-              title="Visit LinkedIn Profile"
+              key={link.href}
+              href={link.href}
+              className="px-3 py-1.5 rounded hover:text-content-primary hover:bg-bg-subtle transition-colors focus-visible:ring-1 focus-visible:ring-accent"
             >
-              <LinkedinIcon className="w-3.5 h-3.5" />
-              <span>LinkedIn</span>
-              <ArrowUpRight className="w-3 h-3 text-zinc-500" />
+              {link.label}
             </a>
+          ))}
+        </nav>
 
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono font-medium rounded bg-zinc-100 text-zinc-950 hover:bg-white transition-colors duration-150 shadow-sm"
-            >
-              <span>Get in touch</span>
-            </a>
+        {/* Right Action: Status & Resume */}
+        <div className="hidden sm:flex items-center gap-4">
+          <div className="flex items-center gap-2 text-[11px] font-mono text-content-muted border border-border-subtle bg-bg-subtle px-2.5 py-1 rounded">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-signal animate-pulse" />
+            <span>Available for hire</span>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex sm:hidden p-2 text-zinc-400 hover:text-zinc-100 rounded focus:outline-none"
-            aria-label="Toggle menu"
+          <a
+            href={profile.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Nawab_Shaikh_Resume.pdf"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-content-primary bg-bg-elevated border border-border-medium hover:border-accent px-3 py-1.5 rounded transition-colors focus-visible:ring-1 focus-visible:ring-accent"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+            <ArrowDownToLine className="w-3.5 h-3.5 text-accent" />
+            <span>Resume</span>
+          </a>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
+          className="md:hidden p-2 rounded text-content-secondary hover:text-content-primary hover:bg-bg-subtle border border-border-subtle"
+        >
+          {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+        </button>
       </div>
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="sm:hidden border-b border-white/[0.08] bg-[#09090b]/95 backdrop-blur-xl px-4 pt-3 pb-6 animate-fade-in">
-          <nav className="flex flex-col gap-1.5 font-mono text-sm">
+        <div className="md:hidden bg-[#0B0C0E] border-b border-border-subtle px-4 py-4 space-y-3">
+          <div className="flex flex-col space-y-2 font-mono text-xs text-content-secondary">
             {navLinks.map((link) => (
               <a
-                key={link.name}
+                key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded text-zinc-300 hover:text-white hover:bg-zinc-800/60 transition-colors"
+                className="px-2 py-1.5 rounded hover:text-content-primary hover:bg-bg-subtle transition-colors"
               >
-                {link.name}
+                {link.label}
               </a>
             ))}
-          </nav>
+          </div>
 
-          <div className="mt-4 pt-4 border-t border-white/[0.08] flex flex-col gap-2">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                if (onOpenResume) onOpenResume();
-              }}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-mono rounded border border-white/15 bg-zinc-900 text-zinc-200"
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>View Resume / CV</span>
-            </button>
-
+          <div className="pt-3 border-t border-border-subtle flex flex-col gap-2.5">
+            <div className="flex items-center gap-2 text-[11px] font-mono text-content-muted">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-signal" />
+              <span>Available for engineering roles</span>
+            </div>
             <a
-              href={profileData.linkedin}
+              href={profile.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-mono rounded border border-white/15 bg-zinc-900 text-zinc-200"
+              download="Nawab_Shaikh_Resume.pdf"
+              className="inline-flex items-center justify-center gap-2 text-xs font-mono font-medium text-content-primary bg-bg-elevated border border-border-medium py-2 rounded"
             >
-              <LinkedinIcon className="w-3.5 h-3.5" />
-              <span>LinkedIn Profile</span>
-              <ArrowUpRight className="w-3 h-3 text-zinc-500" />
-            </a>
-
-            <a
-              href="#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-mono font-medium rounded bg-zinc-100 text-zinc-950"
-            >
-              <span>Get in touch</span>
+              <ArrowDownToLine className="w-3.5 h-3.5 text-accent" />
+              <span>Download Resume (PDF)</span>
             </a>
           </div>
         </div>

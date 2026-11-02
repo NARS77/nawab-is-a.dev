@@ -1,169 +1,103 @@
-export interface CareerStage {
+export interface ExperienceItem {
   id: string;
-  stageNumber: number;
-  title: string;
-  category: string;
-  duration: string;
-  periodLabel: string;
-  progression: string;
-  highlight: string;
+  role: string;
+  organization: string;
+  location: string;
+  period: string;
+  type: "Engineering Work" | "Leadership" | "Education";
   summary: string;
-  responsibilities: string[];
-  keyChallenges: string[];
-  technologies: string[];
-  scope: string;
+  contributions: string[];
+  techStack?: string[];
+  verificationDocument?: string;
 }
 
-export const careerStages: CareerStage[] = [
+export const experiences: ExperienceItem[] = [
   {
-    id: "ai-engineer",
-    stageNumber: 4,
-    title: "AI Engineer / AI Integration + MLOps",
-    category: "Current Focus",
-    duration: "1.5 Years — Present",
-    periodLabel: "Present",
-    progression: "Web Platforms → Distributed AI Systems & Production MLOps",
-    highlight: "Integrating LLMs, asynchronous inference pipelines, and production MLOps workflows.",
+    id: "cruxx-ai",
+    role: "Software Engineer Intern",
+    organization: "Cruxx AI",
+    location: "New Delhi, India (Hybrid)",
+    period: "September 2024 – May 2025",
+    type: "Engineering Work",
     summary:
-      "Architecting and shipping production AI systems that bridge enterprise web backends with generative AI foundations. Specializing in asynchronous LLM pipeline orchestration with Celery/Redis, multi-model routing (OpenAI & Gemini), inference cost/latency optimization, containerized deployments on AWS, and end-to-end model observability.",
-    responsibilities: [
-      "Designed and integrated production LLM inference workflows using OpenAI and Google Gemini APIs.",
-      "Engineered decoupled, asynchronous AI processing queues using Celery and Redis to handle bursty inference requests without blocking web clients.",
-      "Developed high-throughput ML/AI APIs leveraging Django REST Framework and FastAPI with strict schema validation.",
-      "Containerized AI microservices with multi-stage Docker builds and deployed scalable workloads across AWS infrastructure.",
-      "Engineered automated model evaluation pipelines and output verification gates to ensure response accuracy and guard against hallucinations.",
-      "Implemented comprehensive observability, structured logging, latency tracing, and graceful failure fallbacks for all third-party AI endpoints.",
-      "Optimized inference token budgets, caching strategies, and prompt architectures to reduce operating costs and latency.",
+      "Engineered full-stack features and API integrations across React, Django, Python, and PostgreSQL supporting production application workflows.",
+    contributions: [
+      "Developed full-stack application features using React, Django, Python, and PostgreSQL across frontend and backend workflows.",
+      "Built and integrated REST APIs, authentication flows, and database-backed functionality to support production application features.",
+      "Improved frontend responsiveness and usability by optimizing UI workflows, API integration, and client-side behavior.",
+      "Collaborated with developers and stakeholders throughout feature development, debugging, testing, deployment, and Git-based version control.",
+      "Contributed across the software development lifecycle, from implementation and testing through deployment and maintenance.",
     ],
-    keyChallenges: [
-      "Handling non-deterministic LLM response latencies without degrading user experience via streaming responses and background polling.",
-      "Eliminating single-point API dependency by building intelligent model fallback chains across Gemini and OpenAI providers.",
-      "Designing idempotent background worker tasks for large-scale data ingestion and automated classification.",
-    ],
-    technologies: [
-      "Python",
-      "OpenAI API",
-      "Gemini API",
-      "Celery",
-      "Redis",
-      "FastAPI",
-      "Django / DRF",
-      "Docker",
-      "AWS",
-      "PostgreSQL",
-      "Prompt Engineering",
-      "Model Evaluation",
-    ],
-    scope: "End-to-End AI System Architecture & Production Deployment",
+    techStack: ["React", "Django", "Django REST Framework", "Python", "PostgreSQL", "Git"],
+    verificationDocument: "/cruxx_experience_letter.pdf",
   },
   {
-    id: "software-engineer-web",
-    stageNumber: 3,
-    title: "Software Engineer — Web",
-    category: "Full-Stack Core",
-    duration: "2 Years",
-    periodLabel: "24 Months",
-    progression: "Feature Development → System Ownership → Production Engineering",
-    highlight: "Core full-stack web engineering, distributed background jobs, and cloud infrastructure.",
+    id: "nirmit-2024",
+    role: "Event Manager & Treasurer",
+    organization: "NIRMIT 2024 (Inter-College Engineering Festival)",
+    location: "PVPIT, Sangli, India",
+    period: "2024",
+    type: "Leadership",
     summary:
-      "Owned end-to-end development of scalable web applications from database schema design to responsive React frontends. Established solid foundations in distributed task queues with Celery and Redis, relational data modeling in PostgreSQL, containerization with Docker, and CI/CD deployment pipelines on AWS.",
-    responsibilities: [
-      "Designed and developed scalable full-stack web architectures utilizing Django REST Framework and React.",
-      "Constructed normalized relational schemas, complex queries, and index strategies in PostgreSQL.",
-      "Architected background task processing and deferred workloads using Celery backed by Redis brokers.",
-      "Implemented robust JWT-based authentication, role-based access control (RBAC), and API rate limiting.",
-      "Containerized backend and frontend environments with Docker Compose and orchestrated deployment workflows.",
-      "Configured cloud infrastructure on AWS, including compute instances, object storage, and automated CI/CD pipelines.",
-      "Conducted system-design reviews, authored comprehensive API documentation, and mentored junior engineers on coding standards.",
+      "Led end-to-end event operations and financial accounting for a state-level inter-college engineering symposium.",
+    contributions: [
+      "Organized and managed a large-scale inter-college engineering event with participation from more than 20 colleges.",
+      "Coordinated events, venue logistics, and schedules across nine distinct engineering departments.",
+      "Managed budgeting, financial planning, and resource allocation to ensure smooth, zero-deficit execution.",
     ],
-    keyChallenges: [
-      "Refactoring monolith database queries to eliminate N+1 bottlenecks and optimize transaction isolation levels.",
-      "Establishing fault-tolerant task retry logic and dead-letter queues for long-running batch data operations.",
-    ],
-    technologies: [
-      "Python",
-      "Django",
-      "Django REST Framework",
-      "PostgreSQL",
-      "Celery",
-      "Redis",
-      "React",
-      "TypeScript",
-      "Docker",
-      "AWS",
-      "Git / GitHub Actions",
-      "Nginx",
-    ],
-    scope: "Full-Stack Ownership & Scalable Cloud Infrastructure",
   },
   {
-    id: "swe-intern",
-    stageNumber: 2,
-    title: "Software Engineering Intern",
-    category: "Growth & Ownership",
-    duration: "9 Months",
-    periodLabel: "9 Months",
-    progression: "Contributor → Independent Feature Ownership",
-    highlight: "Transitioned to building production-facing APIs and modular React interfaces.",
+    id: "btech-degree",
+    role: "Bachelor of Technology (B.Tech)",
+    organization: "Padmabhooshan Vasantraodada Patil Institute of Technology (PVPIT)",
+    location: "Sangli, Maharashtra, India",
+    period: "Graduating 2025",
+    type: "Education",
     summary:
-      "Transitioned from assisted tasks to independently owning production-facing web features. Built modular React interfaces, integrated RESTful endpoints in Django, structured PostgreSQL queries, and authored automated unit tests within established CI/CD pipelines.",
-    responsibilities: [
-      "Developed production-facing user interface features and reusable component libraries with React and TypeScript.",
-      "Created structured REST API endpoints using Django and connected relational data models in PostgreSQL.",
-      "Implemented token-based authentication and secure user authorization middleware.",
-      "Authored automated unit and integration tests to increase test coverage across critical application flows.",
-      "Identified, reproduced, and patched production defects reported through issue tracking systems.",
-      "Collaborated actively in sprint planning, backlog grooming, and peer code reviews.",
+      "Specialized in Artificial Intelligence & Data Science within Computer Science Engineering. CGPA: 7.5 / 10.",
+    contributions: [
+      "Rigorous coursework covering Data Structures & Algorithms, Database Management Systems, Operating Systems, Machine Learning, and Computer Networks.",
+      "Conducted extensive hands-on projects combining full-stack web applications with applied machine learning and natural language processing.",
     ],
-    keyChallenges: [
-      "Mastering state management across nested React components and harmonizing UI state with backend API contracts.",
-      "Navigating asynchronous JavaScript execution and handling edge cases in network failure states.",
-    ],
-    technologies: [
-      "React",
-      "JavaScript",
-      "TypeScript",
-      "Python",
-      "Django",
-      "PostgreSQL",
-      "REST APIs",
-      "Git",
-      "Jest",
-    ],
-    scope: "Independent Feature Delivery & API Integration",
   },
   {
-    id: "swe-apprentice",
-    stageNumber: 1,
-    title: "Software Engineering Apprentice",
-    category: "Foundations",
-    duration: "9 Months",
-    periodLabel: "9 Months",
-    progression: "Learning → Contribution → Engineering Fundamentals",
-    highlight: "Mastering software engineering fundamentals, debugging, and team development workflows.",
+    id: "diploma-degree",
+    role: "Diploma in Computer Science Engineering",
+    organization: "Padmabhooshan Vasantraodada Patil Institute of Technology (PVPIT)",
+    location: "Sangli, Maharashtra, India",
+    period: "2022",
+    type: "Education",
     summary:
-      "Immersed in production engineering disciplines, code review etiquette, and enterprise version control. Built internal utilities, resolved UI bugs, consumed external REST APIs, and developed foundational proficiency in relational SQL and clean code principles.",
-    responsibilities: [
-      "Assisted senior engineers in implementing frontend UI components using semantic HTML, CSS, and modern JavaScript.",
-      "Integrated and consumed third-party RESTful APIs, validating and parsing payload data safely.",
-      "Diagnosed issues through browser developer tools, server log inspection, and reproducible test cases.",
-      "Authored clean SQL queries for data verification and maintenance scripts.",
-      "Followed strict Git workflows including feature branch isolation, rebasing, and descriptive commit conventions.",
-      "Participated in daily standups, retrospective discussions, and Agile sprint rituals.",
+      "Foundational computer science curriculum completed with distinction (84.0%).",
+    contributions: [
+      "Built early proficiency in procedural programming, object-oriented principles, database fundamentals, and software system design.",
     ],
-    keyChallenges: [
-      "Bridging theoretical academic computer science concepts with commercial codebases and legacy architectures.",
-      "Developing disciplined debugging methodologies across cross-browser environments.",
-    ],
-    technologies: [
-      "JavaScript",
-      "HTML5 / CSS3",
-      "REST APIs",
-      "SQL",
-      "Git / GitHub",
-      "Agile / Scrum",
-      "Linux Fundamentals",
-    ],
-    scope: "Engineering Fundamentals, Team Workflows & Clean Code",
+  },
+];
+
+export const certifications = [
+  {
+    title: "Complete Web Development Bootcamp",
+    issuer: "Udemy",
+    year: "2024",
+    focus: "Full-Stack Web Development, Modern Frontend, REST APIs",
+  },
+  {
+    title: "Machine Learning with Python",
+    issuer: "YHills Trainings",
+    year: "2024",
+    focus: "Supervised & Unsupervised Learning, Feature Engineering, Scikit-Learn",
+  },
+  {
+    title: "Java Programming with JDBC",
+    issuer: "AptTech Solutions",
+    year: "2024",
+    focus: "Object-Oriented Design, Database Connectivity, Relational Operations",
+  },
+  {
+    title: "Python from Beginner to Advanced",
+    issuer: "Udemy",
+    year: "2023",
+    focus: "Advanced Pythonic Idioms, Concurrency, Scripting & Data Parsing",
   },
 ];
