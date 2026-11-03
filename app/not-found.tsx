@@ -1,29 +1,37 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-bg text-content-primary flex flex-col items-center justify-center p-6 text-center">
-      <div className="max-w-md space-y-6">
-        <div className="text-xs font-mono uppercase tracking-widest text-accent">
-          404 / Error
+    <div className="min-h-screen bg-black text-white p-6 sm:p-12 flex flex-col justify-between select-none">
+      <div className="border-b-2 border-white pb-4 flex items-center justify-between text-xs font-bold uppercase tracking-widest">
+        <span>NAWAB SHAIKH / SWISS POSTER SYSTEM</span>
+        <span>ERROR 404</span>
+      </div>
+
+      <div className="py-20 space-y-6">
+        <div className="text-xs font-bold uppercase tracking-widest text-red-500">
+          PAGE NOT RESOLVED
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-content-primary">
-          Resource Not Found
+        <h1 className="text-[14vw] font-bold leading-none tracking-tighter uppercase">
+          404
         </h1>
-        <p className="text-sm text-content-secondary leading-relaxed">
-          The requested system endpoint or case study does not exist or has been moved.
+        <p className="text-xl sm:text-2xl font-bold tracking-tight max-w-xl">
+          The requested URL path does not exist on this server.
         </p>
-        <div>
+
+        <div className="pt-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-mono font-medium text-bg bg-content-primary hover:bg-white px-5 py-2.5 rounded transition-colors"
+            className="inline-block border-2 border-white bg-white text-black hover:bg-black hover:text-white px-8 py-3 text-sm font-bold uppercase tracking-widest transition-colors"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Return to Portfolio</span>
+            ← Return to Index
           </Link>
         </div>
+      </div>
+
+      <div className="border-t-2 border-white pt-4 text-xs font-bold uppercase tracking-widest opacity-60">
+        © 2026 NAWAB SHAIKH
       </div>
     </div>
   );

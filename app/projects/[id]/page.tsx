@@ -1,21 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { projects } from "@/data/projects";
-import {
-  ArrowLeft,
-  ExternalLink,
-  FileText,
-  Layers,
-  CheckCircle,
-  AlertCircle,
-  Cpu,
-} from "lucide-react";
-import { GithubIcon } from "@/components/icons";
+import { siteContent, SwissProject } from "@/content/site";
+import SwissDiagram from "@/components/SwissDiagram";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
-  return projects.map((p) => ({ id: p.id }));
+  return siteContent.projects.map((p) => ({ id: p.slug }));
 }
 
 export async function generateMetadata({
@@ -24,12 +15,12 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const project = projects.find((p) => p.id === id);
+  const project = siteContent.projects.find((p) => p.slug === id);
   if (!project) return { title: "Project Not Found" };
 
   return {
-    title: `${project.title} — Technical Case Study | Nawab Shaikh`,
-    description: project.problem,
+    title: `${project.name} — Technical Architecture | Nawab Shaikh`,
+    description: project.oneLiner,
   };
 }
 
@@ -39,70 +30,79 @@ export default async function ProjectDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const project = projects.find((p) => p.id === id);
+  const project = siteContent.projects.find((p) => p.slug === id);
 
   if (!project) {
     notFound();
   }
 
-  return (
-    <div className="min-h-screen bg-bg text-content-primary">
-      {/* Top Breadcrumb Header */}
-      <header className="border-b border-border-subtle bg-bg/90 backdrop-blur sticky top-0 z-40">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <Link
-            href="/#work"
-            className="inline-flex items-center gap-2 text-xs font-mono text-content-secondary hover:text-content-primary transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to selected work</span>
-          </Link>
+  const { theme } = project;
 
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono text-content-muted">Nawab Shaikh /</span>
-            <span className="text-[11px] font-mono text-content-primary font-medium">
-              {project.title}
-            </span>
-          </div>
+  return (
+    <div
+      className="min-h-screen w-full select-none"
+      style={{
+        backgroundColor: theme.bg,
+        color: theme.text,
+      }}
+    >
+      {/* Top Nav */}
+      <header
+        className="border-b-2 px-4 sm:px-8 py-4 flex items-center justify-between text-xs sm:text-sm font-bold uppercase tracking-wider"
+        style={{ borderColor: theme.rule }}
+      >
+        <Link
+          href="/#work"
+          className="hover:underline underline-offset-4 decoration-2"
+        >
+          ← Return to Index
+        </Link>
+
+        <div>
+          <span>NAWAB SHAIKH / {project.name}</span>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-20 space-y-16">
-        {/* Project Header Banner */}
-        <section className="space-y-6">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="text-xs font-mono px-2.5 py-1 rounded bg-bg-card border border-border-subtle text-accent">
-              PROJECT {project.number}
-            </span>
-            <span className="text-xs font-mono text-content-muted">•</span>
-            <span className="text-xs font-mono text-content-secondary">
-              {project.category}
-            </span>
-            <span className="text-xs font-mono text-content-muted">•</span>
-            <span className="text-xs font-mono px-2.5 py-0.5 rounded border border-border-subtle bg-bg-subtle text-content-primary">
+      <main className="px-4 sm:px-8 py-12 sm:py-20 max-w-7xl mx-auto space-y-12 sm:space-y-16">
+        {/* Banner */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-4 text-xs sm:text-sm font-bold uppercase tracking-wider">
+            <span className="text-2xl sm:text-4xl font-bold">{project.number}</span>
+            <span>/</span>
+            <span
+              className="border-2 px-3 py-0.5 text-xs font-bold uppercase"
+              style={{
+                backgroundColor: theme.badgeBg,
+                color: theme.badgeText,
+                borderColor: theme.rule,
+              }}
+            >
               {project.status}
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-content-primary">
-            {project.title}
+          <h1 className="text-[11vw] sm:text-[12vw] font-bold leading-[0.88] tracking-tighter uppercase break-words">
+            {project.name}
           </h1>
 
-          <p className="text-lg sm:text-xl text-content-secondary max-w-3xl leading-relaxed">
-            {project.tagline}
+          <p className="text-xl sm:text-3xl font-bold tracking-tight max-w-4xl leading-snug">
+            {project.oneLiner}
           </p>
 
-          {/* Quick Links */}
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-4 pt-4 border-t-2" style={{ borderColor: theme.rule }}>
             {project.links.github && (
               <a
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-mono text-content-primary bg-bg-elevated border border-border-medium hover:border-accent px-4 py-2 rounded transition-colors"
+                className="border-2 px-4 py-2 text-xs sm:text-sm font-bold uppercase tracking-wider hover:opacity-85"
+                style={{
+                  backgroundColor: theme.badgeBg,
+                  color: theme.badgeText,
+                  borderColor: theme.rule,
+                }}
               >
-                <GithubIcon className="w-3.5 h-3.5" />
-                <span>View Source on GitHub</span>
+                View on GitHub ↗
               </a>
             )}
 
@@ -111,180 +111,98 @@ export default async function ProjectDetailPage({
                 href={project.links.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-mono text-bg bg-content-primary hover:bg-white px-4 py-2 rounded transition-colors"
+                className="border-2 px-4 py-2 text-xs sm:text-sm font-bold uppercase tracking-wider hover:opacity-85"
+                style={{
+                  backgroundColor: theme.badgeBg,
+                  color: theme.badgeText,
+                  borderColor: theme.rule,
+                }}
               >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span>Launch Live System</span>
-              </a>
-            )}
-
-            {project.links.docs && (
-              <a
-                href={project.links.docs}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-mono text-content-secondary hover:text-content-primary border border-border-subtle px-4 py-2 rounded transition-colors"
-              >
-                <FileText className="w-3.5 h-3.5 text-accent" />
-                <span>Verified Experience Document</span>
+                Launch Demo ↗
               </a>
             )}
           </div>
+        </div>
+
+        {/* Visual Architecture Diagram */}
+        <section className="space-y-4">
+          <div className="text-xs font-bold uppercase tracking-widest opacity-80">
+            01 / ARCHITECTURE DIAGRAM
+          </div>
+          <SwissDiagram project={project} />
         </section>
 
-        {/* Problem & Solution Detailed Section */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-8 rounded border border-border-subtle bg-bg-card">
-          <div className="space-y-3">
-            <div className="text-xs font-mono uppercase tracking-wider text-accent">
-              01 / The Core Problem
+        {/* Problem and Built */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t-2" style={{ borderColor: theme.rule }}>
+          <div className="space-y-2">
+            <div className="text-xs font-bold uppercase tracking-widest opacity-75">
+              02 / THE PROBLEM
             </div>
-            <h2 className="text-xl font-semibold text-content-primary">
-              Context & Technical Constraint
-            </h2>
-            <p className="text-sm text-content-secondary leading-relaxed">
+            <p className="text-base sm:text-lg leading-relaxed font-normal opacity-90">
               {project.problem}
             </p>
           </div>
 
-          <div className="space-y-3">
-            <div className="text-xs font-mono uppercase tracking-wider text-accent">
-              02 / The Engineered Solution
+          <div className="space-y-2">
+            <div className="text-xs font-bold uppercase tracking-widest opacity-75">
+              03 / WHAT I BUILT
             </div>
-            <h2 className="text-xl font-semibold text-content-primary">
-              System Architecture & Delivery
-            </h2>
-            <p className="text-sm text-content-secondary leading-relaxed">
-              {project.solution}
+            <p className="text-base sm:text-lg leading-relaxed font-normal opacity-90">
+              {project.whatIBuilt}
             </p>
           </div>
         </section>
 
-        {/* My Contribution Section */}
-        <section className="p-6 sm:p-8 rounded border border-border-subtle bg-bg-subtle">
-          <div className="text-xs font-mono uppercase tracking-wider text-content-muted mb-2">
-            03 / Specific Contribution & Role
-          </div>
-          <h2 className="text-lg font-semibold text-content-primary mb-3">
-            What I personally designed and engineered
-          </h2>
-          <p className="text-sm text-content-secondary leading-relaxed">
-            {project.myContribution}
-          </p>
-        </section>
-
-        {/* Architectural Layers Breakdown */}
-        <section className="space-y-6">
-          <div>
-            <div className="text-xs font-mono uppercase tracking-wider text-accent mb-1">
-              04 / Systems Architecture
-            </div>
-            <h2 className="text-2xl font-semibold text-content-primary">
-              Layer-by-layer architectural breakdown
-            </h2>
-            <p className="text-xs sm:text-sm font-mono text-content-muted mt-1">
-              {project.architecture.overview}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {project.architecture.layers.map((layer, idx) => (
-              <div
-                key={layer.layer}
-                className="p-5 rounded border border-border-subtle bg-bg-card space-y-2.5"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-accent font-semibold">
-                    LAYER 0{idx + 1}
-                  </span>
-                  <span className="text-[11px] font-mono text-content-muted">
-                    {layer.technologies}
-                  </span>
-                </div>
-                <h3 className="text-base font-semibold text-content-primary">
-                  {layer.layer}
-                </h3>
-                <p className="text-xs sm:text-sm text-content-secondary leading-relaxed">
-                  {layer.role}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Engineering Decisions & Trade-offs */}
-        <section className="space-y-6">
-          <div>
-            <div className="text-xs font-mono uppercase tracking-wider text-accent mb-1">
-              05 / Engineering Decisions & Trade-offs
-            </div>
-            <h2 className="text-2xl font-semibold text-content-primary">
-              Deliberate architectural choices
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {project.architecture.keyDecisions.map((dec, idx) => (
-              <div
-                key={dec.decision}
-                className="p-6 rounded border border-border-subtle bg-bg-card space-y-3"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono text-accent font-semibold">
-                    DECISION {idx + 1}:
-                  </span>
-                  <h3 className="text-base font-semibold text-content-primary">
-                    {dec.decision}
-                  </h3>
-                </div>
-
-                <div className="text-xs sm:text-sm text-content-secondary leading-relaxed">
-                  <strong className="text-content-primary font-medium">Rationale: </strong>
-                  {dec.rationale}
-                </div>
-
-                <div className="p-3 rounded bg-bg-subtle border border-border-subtle text-xs text-content-muted">
-                  <strong className="text-content-secondary font-medium">Trade-off Accepted: </strong>
-                  {dec.tradeoff}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Tech Stack Matrix */}
-        <section className="p-6 sm:p-8 rounded border border-border-subtle bg-bg-card space-y-4">
-          <div className="text-xs font-mono uppercase tracking-wider text-accent">
-            06 / Verified Technology Stack
+        {/* Stack */}
+        <section className="pt-8 border-t-2 space-y-3" style={{ borderColor: theme.rule }}>
+          <div className="text-xs font-bold uppercase tracking-widest opacity-75">
+            04 / VERIFIED STACK
           </div>
           <div className="flex flex-wrap gap-2">
-            {project.stack.map((t) => (
+            {project.stack.map((item) => (
               <span
-                key={t}
-                className="text-xs font-mono px-3 py-1.5 rounded bg-bg-subtle border border-border-subtle text-content-primary"
+                key={item}
+                className="border-2 px-3 py-1 text-xs sm:text-sm font-bold uppercase tracking-wider"
+                style={{ borderColor: theme.rule }}
               >
-                {t}
+                {item}
               </span>
             ))}
           </div>
         </section>
 
-        {/* Next Project Navigation */}
-        <section className="pt-8 border-t border-border-subtle flex items-center justify-between">
-          <Link
-            href="/#work"
-            className="text-xs font-mono text-content-secondary hover:text-content-primary inline-flex items-center gap-2"
+        {/* Planned Features if any */}
+        {project.plannedFeatures && (
+          <section
+            className="border-2 p-6 space-y-3"
+            style={{ borderColor: theme.rule }}
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Return to Portfolio</span>
-          </Link>
+            <div className="text-xs font-bold uppercase tracking-widest opacity-80">
+              05 / PLANNED INTEGRATIONS
+            </div>
+            <ul className="space-y-2 text-sm font-medium">
+              {project.plannedFeatures.map((feat, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="opacity-60">○</span>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
+        {/* Footer Link */}
+        <footer className="pt-8 border-t-2 flex items-center justify-between text-xs sm:text-sm font-bold uppercase tracking-wider" style={{ borderColor: theme.rule }}>
+          <Link href="/#work" className="hover:underline">
+            ← Return to Selected Work
+          </Link>
           <a
-            href={`mailto:nawabshaikh1014@gmail.com?subject=Regarding ${encodeURIComponent(project.title)}`}
-            className="text-xs font-mono text-accent hover:underline"
+            href={`mailto:${siteContent.contact.email}?subject=Regarding ${encodeURIComponent(project.name)}`}
+            className="hover:underline"
           >
-            Discuss this architecture with Nawab ›
+            Contact Nawab →
           </a>
-        </section>
+        </footer>
       </main>
     </div>
   );

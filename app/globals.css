@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #0B0C0E;
-  --foreground: #F3F4F6;
-  color-scheme: dark;
+  --bg: #FFFFFF;
+  --text-main: #0A0A0A;
+  --border-thick: #0A0A0A;
 }
 
 html {
+  background-color: var(--bg);
+  color: var(--text-main);
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,44 +18,46 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--bg);
+  color: var(--text-main);
   min-height: 100vh;
-  selection-background-color: #E59866;
-  selection-color: #0B0C0E;
+  font-family: var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Hard rectangular corners everywhere */
+* {
+  border-radius: 0px !important;
+}
+
+/* High-contrast focus state */
+:focus-visible {
+  outline: 3px solid #0A0A0A;
+  outline-offset: 3px;
 }
 
 ::selection {
-  background: rgba(229, 152, 102, 0.25);
+  background: #0A0A0A;
   color: #FFFFFF;
 }
 
-/* Accessible focus ring */
-:focus-visible {
-  outline: 2px solid #E59866;
-  outline-offset: 2px;
+/* Single subtle load transition */
+@keyframes swissFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Subtle scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.swiss-load-entry {
+  animation: swissFadeIn 200ms ease-out forwards;
 }
 
-::-webkit-scrollbar-track {
-  background: #0B0C0E;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #232730;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #323744;
-}
-
-/* Reduced motion preference */
+/* Strict reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -66,5 +70,11 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .swiss-load-entry {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
