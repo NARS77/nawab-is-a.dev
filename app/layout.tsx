@@ -7,11 +7,10 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-grotesk",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
+  themeColor: "#F4F1EA",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -62,10 +61,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable}`}>
-      <body className="bg-white text-black antialiased min-h-screen font-grotesk">
+      <body className="bg-[#F4F1EA] text-[#1B1B1A] antialiased min-h-screen font-grotesk">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:text-sm focus:font-bold"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#1B1B1A] focus:text-[#F4F1EA] focus:text-sm focus:font-bold"
         >
           Skip to main content
         </a>

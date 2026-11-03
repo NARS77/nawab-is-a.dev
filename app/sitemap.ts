@@ -1,11 +1,11 @@
 import { MetadataRoute } from "next";
-import { projects } from "@/data/projects";
+import { siteContent } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://portfolio-rho-peach-95.vercel.app";
 
-  const projectUrls: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.id}`,
+  const projectUrls: MetadataRoute.Sitemap = siteContent.projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.8,

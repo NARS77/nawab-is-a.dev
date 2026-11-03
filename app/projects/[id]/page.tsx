@@ -63,11 +63,11 @@ export default async function ProjectDetailPage({
         </div>
       </header>
 
-      <main className="px-4 sm:px-8 py-12 sm:py-20 max-w-7xl mx-auto space-y-12 sm:space-y-16">
+      <main className="px-4 sm:px-8 py-10 sm:py-16 max-w-7xl mx-auto space-y-10 sm:space-y-14">
         {/* Banner */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex items-center gap-4 text-xs sm:text-sm font-bold uppercase tracking-wider">
-            <span className="text-2xl sm:text-4xl font-bold">{project.number}</span>
+            <span className="text-2xl sm:text-3xl font-bold">{project.number}</span>
             <span>/</span>
             <span
               className="border-2 px-3 py-0.5 text-xs font-bold uppercase"
@@ -81,14 +81,15 @@ export default async function ProjectDetailPage({
             </span>
           </div>
 
-          <h1 className="text-[11vw] sm:text-[12vw] font-bold leading-[0.88] tracking-tighter uppercase break-words">
+          <h1 className="text-[10vw] sm:text-[11vw] font-bold leading-[0.88] tracking-tighter uppercase break-words">
             {project.name}
           </h1>
 
-          <p className="text-xl sm:text-3xl font-bold tracking-tight max-w-4xl leading-snug">
+          <p className="text-lg sm:text-2xl font-bold tracking-tight max-w-4xl leading-snug">
             {project.oneLiner}
           </p>
 
+          {/* Links */}
           <div className="flex flex-wrap items-center gap-4 pt-4 border-t-2" style={{ borderColor: theme.rule }}>
             {project.links.github && (
               <a
@@ -102,7 +103,7 @@ export default async function ProjectDetailPage({
                   borderColor: theme.rule,
                 }}
               >
-                View on GitHub ↗
+                GitHub Repository ↗
               </a>
             )}
 
@@ -125,38 +126,45 @@ export default async function ProjectDetailPage({
         </div>
 
         {/* Visual Architecture Diagram */}
-        <section className="space-y-4">
-          <div className="text-xs font-bold uppercase tracking-widest opacity-80">
-            01 / ARCHITECTURE DIAGRAM
-          </div>
+        <section className="space-y-3">
           <SwissDiagram project={project} />
         </section>
 
-        {/* Problem and Built */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t-2" style={{ borderColor: theme.rule }}>
+        {/* Problem and Built (2-3 short lines each, not paragraphs) */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t-2" style={{ borderColor: theme.rule }}>
           <div className="space-y-2">
-            <div className="text-xs font-bold uppercase tracking-widest opacity-75">
-              02 / THE PROBLEM
+            <div className="text-xs font-bold uppercase tracking-widest opacity-80">
+              Problem
             </div>
-            <p className="text-base sm:text-lg leading-relaxed font-normal opacity-90">
-              {project.problem}
-            </p>
+            <ul className="space-y-1.5 text-sm sm:text-base leading-snug font-medium">
+              {project.problemLines.map((line, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="font-bold opacity-60">—</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="space-y-2">
-            <div className="text-xs font-bold uppercase tracking-widest opacity-75">
-              03 / WHAT I BUILT
+            <div className="text-xs font-bold uppercase tracking-widest opacity-80">
+              What I Built
             </div>
-            <p className="text-base sm:text-lg leading-relaxed font-normal opacity-90">
-              {project.whatIBuilt}
-            </p>
+            <ul className="space-y-1.5 text-sm sm:text-base leading-snug font-medium">
+              {project.whatIBuiltLines.map((line, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="font-bold opacity-60">—</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
-        {/* Stack */}
-        <section className="pt-8 border-t-2 space-y-3" style={{ borderColor: theme.rule }}>
-          <div className="text-xs font-bold uppercase tracking-widest opacity-75">
-            04 / VERIFIED STACK
+        {/* Stack (short lines / tags) */}
+        <section className="pt-6 border-t-2 space-y-3" style={{ borderColor: theme.rule }}>
+          <div className="text-xs font-bold uppercase tracking-widest opacity-80">
+            Verified Stack
           </div>
           <div className="flex flex-wrap gap-2">
             {project.stack.map((item) => (
@@ -174,13 +182,13 @@ export default async function ProjectDetailPage({
         {/* Planned Features if any */}
         {project.plannedFeatures && (
           <section
-            className="border-2 p-6 space-y-3"
+            className="border-2 p-5 space-y-2"
             style={{ borderColor: theme.rule }}
           >
             <div className="text-xs font-bold uppercase tracking-widest opacity-80">
-              05 / PLANNED INTEGRATIONS
+              Planned Integrations
             </div>
-            <ul className="space-y-2 text-sm font-medium">
+            <ul className="space-y-1.5 text-xs sm:text-sm font-medium">
               {project.plannedFeatures.map((feat, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="opacity-60">○</span>
@@ -192,7 +200,7 @@ export default async function ProjectDetailPage({
         )}
 
         {/* Footer Link */}
-        <footer className="pt-8 border-t-2 flex items-center justify-between text-xs sm:text-sm font-bold uppercase tracking-wider" style={{ borderColor: theme.rule }}>
+        <footer className="pt-6 border-t-2 flex items-center justify-between text-xs sm:text-sm font-bold uppercase tracking-wider" style={{ borderColor: theme.rule }}>
           <Link href="/#work" className="hover:underline">
             ← Return to Selected Work
           </Link>

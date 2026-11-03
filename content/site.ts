@@ -3,8 +3,8 @@ export interface SwissProject {
   number: string;
   name: string;
   oneLiner: string;
-  problem: string;
-  whatIBuilt: string;
+  problemLines: string[];
+  whatIBuiltLines: string[];
   stack: string[];
   status: string;
   links: {
@@ -12,9 +12,9 @@ export interface SwissProject {
     demo?: string;
   };
   theme: {
-    bg: string; // Hex color
-    text: string; // Text color on this bg
-    rule: string; // Border color on this bg
+    bg: string;
+    text: string;
+    rule: string;
     badgeBg: string;
     badgeText: string;
   };
@@ -32,6 +32,7 @@ export interface SwissSiteContent {
     role: string;
     oneLineHeadline: string;
     location: string;
+    relocationNote: string;
     email: string;
     phone: string;
     github: string;
@@ -62,15 +63,16 @@ export const siteContent: SwissSiteContent = {
     name: "NAWAB SHAIKH",
     role: "Full-Stack Developer | AI Integration Engineer",
     oneLineHeadline: "Full-stack developer building AI-integrated products and workflow automation.",
-    location: "India (Open to relocation)",
+    location: "India",
+    relocationNote: "Open to relocation",
     email: "nawabshaikh1014@gmail.com",
     phone: "+91 7620436307",
     github: "https://github.com/NARS77",
     linkedin: "https://linkedin.com/in/nars77",
     resumeUrl: "/resume.pdf",
-    // Strictly under 100 words (75 words), factual, zero banned words:
+    // Strictly under 40 words (33 words), factual, zero banned words:
     aboutText:
-      "I am a full-stack developer based in India, open to relocation. I build end-to-end web applications, design REST APIs, and integrate AI into production workflows. Previously, I worked as a software engineer intern at Cruxx AI, shipping features across React, Django, Python, and PostgreSQL. I hold a B.Tech in Computer Science Engineering (Artificial Intelligence & Data Science) from PVPIT Sangli. I focus on concrete systems: reliable database schemas, clear API contracts, and practical LLM pipelines.",
+      "Full-stack developer in India. Former software engineer intern at Cruxx AI. B.Tech in CSE (AI & Data Science) from PVPIT Sangli (2025). I build reliable web apps, REST APIs, and practical LLM pipelines.",
     placeholders: [
       {
         key: "SENTIMENTSPHERE_LIVE_DEMO",
@@ -87,11 +89,6 @@ export const siteContent: SwissSiteContent = {
         description: "Production URL for SkillSphere LMS",
         status: "Marked as 'Architecture & Foundation' in development; repository code verified.",
       },
-      {
-        key: "AVAILABILITY_FLAG",
-        description: "Official real-time hiring availability indicator",
-        status: "Omitted from hero UI until explicitly confirmed by Nawab.",
-      },
     ],
   },
   projects: [
@@ -100,19 +97,26 @@ export const siteContent: SwissSiteContent = {
       number: "01",
       name: "SENTIMENTSPHERE",
       oneLiner: "Customer feedback intelligence platform using dual-layer NLP for sentiment scoring and thematic clustering.",
-      problem: "Reading thousands of user reviews manually is slow, while running every feedback row through external LLMs causes latency bottlenecks and high API bills.",
-      whatIBuilt: "Architected the Django REST Framework backend, engineered the dual-layer NLP pipeline (TextBlob for local lexical scoring + OpenAI API for thematic extraction), dynamic prompt templates, and Highcharts dashboards.",
+      problemLines: [
+        "Manual review analysis is too slow to catch churn signals.",
+        "Passing all raw reviews into LLMs causes high latency and cost.",
+      ],
+      whatIBuiltLines: [
+        "Dual NLP pipeline: TextBlob for fast local polarity + OpenAI for clustering.",
+        "Django REST Framework backend with dynamic prompt templates.",
+        "Interactive Highcharts dashboard with NPS and sentiment trends.",
+      ],
       stack: ["Python 3.12", "Django 5.2", "Django REST Framework", "PostgreSQL (Intended)", "OpenAI API", "TextBlob", "Pandas", "Highcharts"],
       status: "Shipped & Active",
       links: {
         github: "https://github.com/NARS77/SentimentSphere",
       },
       theme: {
-        bg: "#D82818", // Signal Red
-        text: "#FFFFFF",
-        rule: "#FFFFFF",
-        badgeBg: "#FFFFFF",
-        badgeText: "#D82818",
+        bg: "#E8B4A6", // Soft Coral
+        text: "#1B1B1A",
+        rule: "#1B1B1A",
+        badgeBg: "#1B1B1A",
+        badgeText: "#F4F1EA",
       },
       diagram: {
         input: {
@@ -134,9 +138,16 @@ export const siteContent: SwissSiteContent = {
       slug: "rigsmith",
       number: "02",
       name: "RIGSMITH",
-      oneLiner: "PC builder platform that evaluates physical compatibility, electrical clearances, and transient wattage margins.",
-      problem: "Custom PC building involves mechanical dimensions (GPU length vs front radiator) and electrical constraints (CPU socket pinout, transient power spikes) that cause build failure.",
-      whatIBuilt: "Designed the normalized PostgreSQL hardware schema, built the rule-based compatibility engine in Django, created the interactive SVG chassis schematic in React, and containerized the system with Docker and Nginx.",
+      oneLiner: "PC builder platform evaluating physical clearances, socket rules, and transient wattage margins.",
+      problemLines: [
+        "Mismatched socket pinouts and physical clearance conflicts ruin builds.",
+        "GPU transient wattage spikes trigger unexpected system shutdowns.",
+      ],
+      whatIBuiltLines: [
+        "Rule-based compatibility engine checking electrical and physical bounds.",
+        "Normalized PostgreSQL hardware schema for thousands of component specs.",
+        "Interactive SVG chassis schematic with live clearance warnings.",
+      ],
       stack: ["React 18", "Vite 6", "Python", "Django 5.x", "Django REST Framework", "PostgreSQL", "Docker", "SVG"],
       status: "Shipped & Active",
       links: {
@@ -144,11 +155,11 @@ export const siteContent: SwissSiteContent = {
         demo: "https://rig-smith.vercel.app/",
       },
       theme: {
-        bg: "#0C38DF", // Cobalt Blue
-        text: "#FFFFFF",
-        rule: "#FFFFFF",
-        badgeBg: "#FFFFFF",
-        badgeText: "#0C38DF",
+        bg: "#B7CCE0", // Powder Blue
+        text: "#1B1B1A",
+        rule: "#1B1B1A",
+        badgeBg: "#1B1B1A",
+        badgeText: "#F4F1EA",
       },
       diagram: {
         input: {
@@ -170,25 +181,32 @@ export const siteContent: SwissSiteContent = {
       slug: "echotrace",
       number: "03",
       name: "ECHOTRACE",
-      oneLiner: "Meeting memory app that transcribes conversations and extracts structured decisions and action items.",
-      problem: "Technical decisions and assigned tasks from recurring engineering meetings are lost in unorganized notes or forgotten audio recordings.",
-      whatIBuilt: "Designed the audio segmentation pipeline and built prompt chains with strict JSON schema constraints for structured database storage.",
+      oneLiner: "Meeting memory app transcribing conversations into structured decisions and action items.",
+      problemLines: [
+        "Key engineering decisions from calls get lost in raw audio files.",
+        "Manual meeting notes miss action owners and deadlines.",
+      ],
+      whatIBuiltLines: [
+        "Chunked audio processing pipeline with OpenAI Whisper transcription.",
+        "GPT-4o prompt chain extracting structured JSON action items and owners.",
+        "Searchable archive linking decision logs back to timestamped audio.",
+      ],
       stack: ["Python", "OpenAI Whisper API", "GPT-4o", "Next.js", "PostgreSQL"],
       status: "Prototype / Active Dev",
       plannedFeatures: [
-        "Slack bot webhook integration for automated task alerts (Planned)",
+        "Slack webhook for automated task alerts (Planned)",
         "Gmail briefing digest dispatch (Planned)",
-        "Live WebSocket audio transcription (Planned)",
+        "Live WebSocket streaming transcription (Planned)",
       ],
       links: {
         github: "https://github.com/NARS77",
       },
       theme: {
-        bg: "#D6EE10", // Acid Yellow
-        text: "#0A0A0A",
-        rule: "#0A0A0A",
-        badgeBg: "#0A0A0A",
-        badgeText: "#D6EE10",
+        bg: "#EAD9A0", // Butter
+        text: "#1B1B1A",
+        rule: "#1B1B1A",
+        badgeBg: "#1B1B1A",
+        badgeText: "#F4F1EA",
       },
       diagram: {
         input: {
@@ -210,20 +228,27 @@ export const siteContent: SwissSiteContent = {
       slug: "skillsphere",
       number: "04",
       name: "SKILLSPHERE",
-      oneLiner: "Learning management system with role-based authorization and modular curriculum progress tracking.",
-      problem: "Learning platforms need strict authorization boundaries between instructors and students to prevent unassigned material tampering or grade manipulation.",
-      whatIBuilt: "Modeled the hierarchical course catalog schema (Courses → Modules → Lessons) in PostgreSQL, built DRF permission classes (`IsInstructorOrReadOnly`), and built enrollment tracking views.",
+      oneLiner: "Learning management system with role-based authorization and modular progress tracking.",
+      problemLines: [
+        "Learning platforms need strict boundary checks between instructors and students.",
+        "Uncontrolled access can lead to unassigned course edits or grade tampering.",
+      ],
+      whatIBuiltLines: [
+        "Hierarchical course schema (Courses → Modules → Lessons) in PostgreSQL.",
+        "Custom DRF permission classes enforcing strict endpoint authorization.",
+        "Atomic lesson progress tracking with instructor grading dashboards.",
+      ],
       stack: ["Python", "Django", "Django REST Framework", "PostgreSQL", "JavaScript", "Bootstrap 5"],
       status: "Architecture & Foundation (In Development)",
       links: {
         github: "https://github.com/NARS77/SkillsSphere",
       },
       theme: {
-        bg: "#0F1115", // Off-Black
-        text: "#F4F4F4",
-        rule: "#333333",
-        badgeBg: "#FFFFFF",
-        badgeText: "#0F1115",
+        bg: "#B8CDB4", // Sage
+        text: "#1B1B1A",
+        rule: "#1B1B1A",
+        badgeBg: "#1B1B1A",
+        badgeText: "#F4F1EA",
       },
       diagram: {
         input: {
