@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 import crypto from "crypto";
 import { StatusItem } from "@/content/status";
 
@@ -30,20 +29,56 @@ export interface LiveStatusDisplay {
 export async function getLiveStatus(): Promise<LiveStatusDisplay | null> {
   try {
     let data: StatusItem | null = null;
-    const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
-    const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+    let redisUrl = process.env.UPSTASH_REDIS_REST_URL?.trim();
+    const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
 
     if (redisUrl && redisToken) {
-      const res = await fetch(`${redisUrl}/get/live_status`, {
-        headers: {
-          Authorization: `Bearer ${redisToken}`,
-        },
-        next: { revalidate: 60 },
-      });
-      if (res.ok) {
-        const json = await res.json();
-        if (json.result) {
-          data = typeof json.result === "string" ? JSON.parse(json.result) : json.result;
+      // Remove trailing slash if present
+      if (redisUrl.endsWith("/")) {
+        redisUrl = redisUrl.slice(0, -1);
+      }
+
+      // 1. Try standard Upstash command array POST
+      try {
+        const res = await fetch(redisUrl, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${redisToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(["GET", "live_status"]),
+          cache: "no-store",
+        });
+
+        if (res.ok) {
+          const json = await res.json();
+          if (json.result) {
+            data =
+              typeof json.result === "string"
+                ? JSON.parse(json.result)
+                : json.result;
+          }
+        }
+      } catch {
+        // Fallback to GET endpoint
+        try {
+          const fallbackRes = await fetch(`${redisUrl}/get/live_status`, {
+            headers: {
+              Authorization: `Bearer ${redisToken}`,
+            },
+            cache: "no-store",
+          });
+          if (fallbackRes.ok) {
+            const json = await fallbackRes.json();
+            if (json.result) {
+              data =
+                typeof json.result === "string"
+                  ? JSON.parse(json.result)
+                  : json.result;
+            }
+          }
+        } catch {
+          // ignore
         }
       }
     } else {
@@ -63,7 +98,9 @@ export async function getLiveStatus(): Promise<LiveStatusDisplay | null> {
     const isOver24Hours = diff > 24 * 60 * 60 * 1000;
 
     const finalText = isOver24Hours ? "Offline" : data.text;
-    const timeAgo = isOver24Hours ? "updated >24h ago" : `updated ${getFormatTimeAgo(diff)}`;
+    const timeAgo = isOver24Hours
+      ? "updated >24h ago"
+      : `updated ${getFormatTimeAgo(diff)}`;
 
     return {
       text: finalText,
@@ -86,20 +123,39 @@ export async function setLiveStatus(text: string): Promise<boolean> {
     updatedAt: Date.now(),
   };
 
-  const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
-  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+  let redisUrl = process.env.UPSTASH_REDIS_REST_URL?.trim();
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
 
   if (redisUrl && redisToken) {
+    if (redisUrl.endsWith("/")) {
+      redisUrl = redisUrl.slice(0, -1);
+    }
+
     try {
-      const res = await fetch(`${redisUrl}/set/live_status`, {
+      // Standard Upstash REST API command array
+      const res = await fetch(redisUrl, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${redisToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(JSON.stringify(item)),
+        body: JSON.stringify(["SET", "live_status", JSON.stringify(item)]),
       });
-      return res.ok;
+
+      if (res.ok) {
+        return true;
+      }
+
+      // Secondary fallback endpoint
+      const fallbackRes = await fetch(
+        `${redisUrl}/set/live_status/${encodeURIComponent(JSON.stringify(item))}`,
+        {
+          headers: {
+            Authorization: `Bearer ${redisToken}`,
+          },
+        }
+      );
+      return fallbackRes.ok;
     } catch {
       return false;
     }
@@ -157,7 +213,6 @@ export function verifySessionToken(token: string | undefined): boolean {
     .update(timestampStr)
     .digest("hex");
 
-  // Constant time comparison
   try {
     return crypto.timingSafeEqual(
       Buffer.from(providedSignature),

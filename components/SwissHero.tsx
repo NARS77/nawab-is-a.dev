@@ -3,6 +3,7 @@ import { siteContent } from "@/content/site";
 import { LiveStatusDisplay } from "@/lib/status";
 import InteractiveHeroName from "@/components/InteractiveHeroName";
 import MagneticElement from "@/components/MagneticElement";
+import LiveStatusHeroLine from "@/components/LiveStatusHeroLine";
 
 interface SwissHeroProps {
   status?: LiveStatusDisplay | null;
@@ -66,22 +67,8 @@ export default function SwissHero({ status }: SwissHeroProps) {
 
       {/* Main Massive Name Poster Lockup */}
       <div className="px-4 sm:px-8 py-10 sm:py-16 lg:py-24">
-        {/* Live Status indicator line (if storage active & valid) */}
-        {status && status.text && (
-          <div className="mb-6 inline-flex items-center gap-2.5 border-2 border-[#1B1B1A] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider shadow-none">
-            <span
-              className={`w-2.5 h-2.5 ${
-                status.isOffline ? "bg-stone-400" : "bg-emerald-600 animate-pulse"
-              }`}
-              aria-hidden="true"
-            />
-            <span className="font-bold text-[#1B1B1A]">{status.text}</span>
-            <span className="opacity-40">·</span>
-            <span className="font-normal opacity-70 lowercase">
-              {status.timeAgoText}
-            </span>
-          </div>
-        )}
+        {/* Live Status Indicator Line */}
+        <LiveStatusHeroLine initialStatus={status} />
 
         {/* Massive Variable-Font Name */}
         <InteractiveHeroName />
