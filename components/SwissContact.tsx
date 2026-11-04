@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { siteContent } from "@/content/site";
 import MagneticElement from "@/components/MagneticElement";
+import InteractiveVariableHeading from "@/components/InteractiveVariableHeading";
 
 export default function SwissContact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -32,9 +33,12 @@ export default function SwissContact() {
     <section id="contact" className="w-full bg-[#1B1B1A] text-[#F4F1EA] px-4 sm:px-8 py-12 sm:py-20">
       {/* Section Header */}
       <div className="border-b-2 border-[#F4F1EA] pb-4 mb-8 sm:mb-12">
-        <h2 className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter">
-          CONTACT
-        </h2>
+        <InteractiveVariableHeading
+          text="CONTACT"
+          as="h2"
+          radius={200}
+          className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">

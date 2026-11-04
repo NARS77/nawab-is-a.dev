@@ -1,15 +1,19 @@
 import React from "react";
 import { siteContent } from "@/content/site";
 import MagneticElement from "@/components/MagneticElement";
+import InteractiveVariableHeading from "@/components/InteractiveVariableHeading";
 
 export default function SwissAbout() {
   return (
     <section id="about" className="w-full bg-[#F4F1EA] text-[#1B1B1A] border-b-4 border-[#1B1B1A] px-4 sm:px-8 py-12 sm:py-20">
       {/* Section Header */}
       <div className="border-b-2 border-[#1B1B1A] pb-4 mb-8 sm:mb-12">
-        <h2 className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter">
-          ABOUT NAWAB SHAIKH
-        </h2>
+        <InteractiveVariableHeading
+          text="ABOUT NAWAB SHAIKH"
+          as="h2"
+          radius={220}
+          className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter"
+        />
       </div>
 
       {/* Grid: Short Narrative (<40 words) & Verified Facts */}

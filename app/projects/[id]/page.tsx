@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { siteContent, SwissProject } from "@/content/site";
 import SwissDiagram from "@/components/SwissDiagram";
+import InteractiveVariableHeading from "@/components/InteractiveVariableHeading";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -81,9 +82,12 @@ export default async function ProjectDetailPage({
             </span>
           </div>
 
-          <h1 className="text-[10vw] sm:text-[11vw] font-bold leading-[0.88] tracking-tighter uppercase break-words">
-            {project.name}
-          </h1>
+          <InteractiveVariableHeading
+            text={project.name}
+            as="h1"
+            radius={260}
+            className="text-[10vw] sm:text-[11vw] font-bold leading-[0.88] tracking-tighter uppercase break-words"
+          />
 
           <p className="text-lg sm:text-2xl font-bold tracking-tight max-w-4xl leading-snug">
             {project.oneLiner}

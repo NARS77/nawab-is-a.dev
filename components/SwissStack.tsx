@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { stackData, StackSkill } from "@/content/stack";
 import { StackIcon } from "@/components/StackIcons";
+import InteractiveVariableHeading from "@/components/InteractiveVariableHeading";
 
 export default function SwissStack() {
   const [activeSkillName, setActiveSkillName] = useState<string | null>(null);
@@ -19,9 +20,12 @@ export default function SwissStack() {
     >
       {/* Section Header */}
       <div className="border-b-2 border-[#1B1B1A] pb-4 mb-8 sm:mb-12">
-        <h2 className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter">
-          TECHNICAL STACK
-        </h2>
+        <InteractiveVariableHeading
+          text="TECHNICAL STACK"
+          as="h2"
+          radius={220}
+          className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter"
+        />
       </div>
 
       {/* Grouped Grid */}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SwissProject } from "@/content/site";
 import SwissDiagram from "@/components/SwissDiagram";
 import MagneticElement from "@/components/MagneticElement";
+import InteractiveVariableHeading from "@/components/InteractiveVariableHeading";
 
 interface ProjectFieldItemProps {
   project: SwissProject;
@@ -95,10 +96,13 @@ export default function ProjectFieldItem({ project }: ProjectFieldItemProps) {
           </div>
         </div>
 
-        {/* Project Name */}
-        <h2 className="text-[11vw] sm:text-[12vw] font-bold leading-[0.88] tracking-tighter uppercase break-words mb-6 sm:mb-8">
-          {project.name}
-        </h2>
+        {/* Project Name with Variable Font Weight Shift on Pointer Distance */}
+        <InteractiveVariableHeading
+          text={project.name}
+          as="h2"
+          radius={260}
+          className="text-[11vw] sm:text-[12vw] font-bold leading-[0.88] tracking-tighter uppercase break-words mb-6 sm:mb-8"
+        />
 
         {/* One Sentence */}
         <p className="text-xl sm:text-2xl font-bold tracking-tight leading-snug max-w-4xl mb-8 sm:mb-12">
