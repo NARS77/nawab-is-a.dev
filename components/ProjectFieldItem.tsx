@@ -55,7 +55,7 @@ export default function ProjectFieldItem({ project }: ProjectFieldItemProps) {
     <article
       ref={containerRef}
       id={`project-${project.slug}`}
-      className="relative w-full border-b-4 border-[#1B1B1A] px-4 sm:px-8 py-12 sm:py-16 lg:py-20 select-none overflow-hidden"
+      className="relative w-full border-b-4 border-[#1B1B1A] px-4 sm:px-8 py-12 sm:py-16 lg:py-20 overflow-hidden"
       style={{
         backgroundColor: "#F4F1EA",
         color: theme.text,

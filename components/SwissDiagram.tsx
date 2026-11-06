@@ -158,7 +158,7 @@ export default function SwissDiagram({ project }: SwissDiagramProps) {
       aria-label={`${project.name} architecture pipeline diagram`}
     >
       <div className="text-[11px] font-bold uppercase tracking-widest mb-4 opacity-80">
-        SYSTEM FLOW / INPUT → PROCESS → OUTPUT
+        HOW IT WORKS / INPUT → PROCESS → OUTPUT
       </div>
 
       {/* SVG Canvas for Desktop / Tablet */}

@@ -143,13 +143,13 @@ export default function SwissContact() {
 
             {status === "success" && (
               <div className="border-2 border-[#F4F1EA] bg-[#B8CDB4] text-[#1B1B1A] p-3 text-xs font-bold">
-                ✓ Message dispatched. I will reply promptly via email.
+                Thanks for writing. I’ll get back to you by email.
               </div>
             )}
 
             {status === "error" && (
               <div className="border-2 border-red-500 bg-red-950/40 text-red-200 p-3 text-xs font-bold">
-                Dispatch issue encountered. Please reach out directly to {siteContent.contact.email}.
+                The form couldn’t send that. Please email me at {siteContent.contact.email}.
               </div>
             )}
 
@@ -159,7 +159,7 @@ export default function SwissContact() {
                 disabled={status === "sending"}
                 className="w-full sm:w-auto border-2 border-[#F4F1EA] bg-[#F4F1EA] text-[#1B1B1A] hover:bg-transparent hover:text-[#F4F1EA] px-8 py-3 font-bold uppercase tracking-widest transition-colors disabled:opacity-50"
               >
-                {status === "sending" ? "Transmitting..." : "Send Message →"}
+                {status === "sending" ? "Sending..." : "Send Message →"}
               </button>
             </MagneticElement>
           </form>

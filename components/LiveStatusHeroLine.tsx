@@ -15,17 +15,19 @@ export default function LiveStatusHeroLine({
   );
 
   useEffect(() => {
-    // Fetch fresh status in client background to bypass stale static cache
-    fetch("/api/admin/status", { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data?.status?.text) {
-          setStatus(data.status);
-        }
-      })
-      .catch(() => {
-        // silent fallback
-      });
+    let active = true;
+    const controller = new AbortController();
+    async function refresh() {
+      try {
+        const res = await fetch("/api/admin/status", { cache: "no-store", signal: controller.signal });
+        if (!res.ok) { if (active) setStatus(null); return; }
+        const data = await res.json();
+        if (active) setStatus(data.status?.text ? data.status : null);
+      } catch { if (active) setStatus(null); }
+    }
+    void refresh();
+    const timer = window.setInterval(refresh, 60_000);
+    return () => { active = false; controller.abort(); window.clearInterval(timer); };
   }, []);
 
   if (!status || !status.text) {

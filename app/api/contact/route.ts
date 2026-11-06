@@ -59,16 +59,15 @@ export async function POST(request: Request) {
       }
     }
 
-    if (!result.success && result.error) {
+    if (!result.success) {
       console.warn("Email service encountered an issue:", result.error);
-      // Still return 200 with clear notification if it failed so recruiter can copy direct email
       return NextResponse.json(
         {
-          success: true,
-          message:
-            "Thank you! Your message was received and logged. Feel free to also email directly at nawabshaikh1014@gmail.com.",
+          success: false,
+          error:
+            "The contact form could not send your message. Please email nawabshaikh1014@gmail.com directly.",
         },
-        { status: 200 }
+        { status: 503 }
       );
     }
 

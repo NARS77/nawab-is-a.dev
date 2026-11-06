@@ -3,6 +3,7 @@ import { siteContent } from "./site";
 export interface StatusItem {
   text: string;
   updatedAt: number; // epoch ms
+  expiresAt?: number; // epoch ms for native expiration
 }
 
 // Generate project building presets

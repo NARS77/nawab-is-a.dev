@@ -156,5 +156,9 @@ ${message}
   console.log(`Message: ${message}`);
   console.log("------------------------------------------------------------------");
 
-  return { success: true, provider: "mock" };
+  return {
+    success: false,
+    provider: "mock",
+    error: "No email provider is configured, so the message was not sent.",
+  };
 }

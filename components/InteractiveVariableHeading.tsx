@@ -123,7 +123,7 @@ export default function InteractiveVariableHeading({
   return (
     <Component
       ref={headingRef as any}
-      className={`select-none ${className}`}
+      className={className}
       style={style}
       aria-label={text}
     >

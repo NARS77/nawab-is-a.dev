@@ -1,4 +1,5 @@
 import React from "react";
+import Currently from "@/components/Currently";
 import SwissHero from "@/components/SwissHero";
 import SwissProjects from "@/components/SwissProjects";
 import SwissStack from "@/components/SwissStack";
@@ -15,9 +16,10 @@ export default async function HomePage() {
   return (
     <main id="main-content" className="w-full swiss-load-entry">
       <SwissHero status={liveStatus} />
+      <Currently />
+      <SwissAbout />
       <SwissProjects />
       <SwissStack />
-      <SwissAbout />
       <SwissContact />
     </main>
   );

@@ -38,12 +38,6 @@ export interface SwissSiteContent {
     github: string;
     linkedin: string;
     resumeUrl: string;
-    aboutText: string;
-    placeholders: {
-      key: string;
-      description: string;
-      status: string;
-    }[];
   };
   projects: SwissProject[];
   stack: {
@@ -61,8 +55,8 @@ export interface SwissSiteContent {
 export const siteContent: SwissSiteContent = {
   author: {
     name: "NAWAB SHAIKH",
-    role: "Full-Stack Developer | AI Integration Engineer",
-    oneLineHeadline: "Full-stack developer building AI-integrated products and workflow automation.",
+    role: "Programmer · Full-stack software",
+    oneLineHeadline: "I look for a problem, then try to fix it.",
     location: "India",
     relocationNote: "Open to relocation",
     email: "nawabshaikh1014@gmail.com",
@@ -70,44 +64,24 @@ export const siteContent: SwissSiteContent = {
     github: "https://github.com/NARS77",
     linkedin: "https://linkedin.com/in/nars77",
     resumeUrl: "/resume.pdf",
-    // Strictly under 40 words (33 words), factual, zero banned words:
-    aboutText:
-      "Full-stack developer in India. Former software engineer intern at Cruxx AI. B.Tech in CSE (AI & Data Science) from PVPIT Sangli (2025). I build reliable web apps, REST APIs, and practical LLM pipelines.",
-    placeholders: [
-      {
-        key: "SENTIMENTSPHERE_LIVE_DEMO",
-        description: "Public live demo URL for SentimentSphere",
-        status: "Local / GitHub code verified; no public live demo URL in records.",
-      },
-      {
-        key: "ECHOTRACE_SLACK_GMAIL",
-        description: "Slack bot and Gmail webhook integration",
-        status: "Marked explicitly as 'Planned' in EchoTrace per prompt instructions.",
-      },
-      {
-        key: "SKILLSPHERE_DEPLOYMENT",
-        description: "Production URL for SkillSphere LMS",
-        status: "Marked as 'Architecture & Foundation' in development; repository code verified.",
-      },
-    ],
   },
   projects: [
     {
       slug: "sentimentsphere",
       number: "01",
       name: "SENTIMENTSPHERE",
-      oneLiner: "Customer feedback intelligence platform using dual-layer NLP for sentiment scoring and thematic clustering.",
+      oneLiner: "A feedback analysis app that combines sentiment scoring with AI-assisted theme grouping.",
       problemLines: [
-        "Manual review analysis is too slow to catch churn signals.",
-        "Passing all raw reviews into LLMs causes high latency and cost.",
+        "Reading feedback one review at a time makes recurring issues hard to spot.",
+        "A single sentiment score does not explain what people are responding to.",
       ],
       whatIBuiltLines: [
-        "Dual NLP pipeline: TextBlob for fast local polarity + OpenAI for clustering.",
-        "Django REST Framework backend with dynamic prompt templates.",
-        "Interactive Highcharts dashboard with NPS and sentiment trends.",
+        "Built a Django app that accepts customer feedback and analyzes it in batches.",
+        "Used TextBlob for sentiment scores and the OpenAI API to group themes.",
+        "Added charts to make sentiment and feedback patterns easier to inspect.",
       ],
-      stack: ["Python 3.12", "Django 5.2", "Django REST Framework", "PostgreSQL (Intended)", "OpenAI API", "TextBlob", "Pandas", "Highcharts"],
-      status: "Shipped & Active",
+      stack: ["Python 3.12", "Django 5.2", "Django REST Framework", "OpenAI API", "TextBlob", "Pandas", "Highcharts"],
+      status: "Source on GitHub",
       links: {
         github: "https://github.com/NARS77/SentimentSphere",
       },
@@ -121,16 +95,16 @@ export const siteContent: SwissSiteContent = {
       diagram: {
         input: {
           title: "RAW FEEDBACK",
-          detail: "CSV datasets & App Store review payloads",
+          detail: "Customer reviews and feedback",
         },
         processing: {
           title: "DUAL-LAYER NLP",
-          detail: "TextBlob (local polarity) → OpenAI API (thematic categorization)",
-          subdetail: "AnalysisRun state machine & dynamic prompt models",
+          detail: "TextBlob sentiment scoring and OpenAI theme grouping",
+          subdetail: "Batch analysis in a Django application",
         },
         output: {
           title: "METRICS & DASHBOARD",
-          detail: "NPS ratings, sentiment distribution & Highcharts trends",
+          detail: "Charts for sentiment and review patterns",
         },
       },
     },
@@ -138,21 +112,21 @@ export const siteContent: SwissSiteContent = {
       slug: "rigsmith",
       number: "02",
       name: "RIGSMITH",
-      oneLiner: "PC builder platform evaluating physical clearances, socket rules, and transient wattage margins.",
+      oneLiner: "A PC builder that helps check whether selected parts fit together.",
       problemLines: [
-        "Mismatched socket pinouts and physical clearance conflicts ruin builds.",
-        "GPU transient wattage spikes trigger unexpected system shutdowns.",
+        "Choosing PC parts means keeping track of compatibility across components.",
+        "It is hard to picture a build from a list of part names alone.",
       ],
       whatIBuiltLines: [
-        "Rule-based compatibility engine checking electrical and physical bounds.",
-        "Normalized PostgreSQL hardware schema for thousands of component specs.",
-        "Interactive SVG chassis schematic with live clearance warnings.",
+        "Built a compatibility checker for common component constraints.",
+        "Made an interactive SVG view of the selected parts inside a case.",
+        "Connected the React interface to a Django API and a component catalog.",
       ],
       stack: ["React 18", "Vite 6", "Python", "Django 5.x", "Django REST Framework", "PostgreSQL", "Docker", "SVG"],
-      status: "Shipped & Active",
+      status: "Demo + source available",
       links: {
         github: "https://github.com/NARS77/RigSmith",
-        demo: "https://rig-smith.vercel.app/",
+        demo: "https://rigsmith20.vercel.app/",
       },
       theme: {
         bg: "#B7CCE0", // Powder Blue
@@ -164,16 +138,16 @@ export const siteContent: SwissSiteContent = {
       diagram: {
         input: {
           title: "COMPONENT SELECTION",
-          detail: "Interactive SVG chassis & hardware slot choices",
+          detail: "Selected PC components",
         },
         processing: {
-          title: "COMPATIBILITY MATRIX",
-          detail: "Socket, clearance, RAM clock & PCIe lane validation",
-          subdetail: "Dynamic GPU transient power spike margin calculation",
+          title: "COMPATIBILITY CHECKS",
+          detail: "Checks component rules and case fit",
+          subdetail: "Results update as parts are selected",
         },
         output: {
           title: "VERIFIED SYSTEM BUILD",
-          detail: "PostgreSQL build records & automated price drop mailers",
+          detail: "A parts list and visual build overview",
         },
       },
     },
@@ -181,15 +155,15 @@ export const siteContent: SwissSiteContent = {
       slug: "echotrace",
       number: "03",
       name: "ECHOTRACE",
-      oneLiner: "Meeting memory app transcribing conversations into structured decisions and action items.",
+      oneLiner: "A prototype for turning recorded meetings into searchable notes and action items.",
       problemLines: [
-        "Key engineering decisions from calls get lost in raw audio files.",
-        "Manual meeting notes miss action owners and deadlines.",
+        "Important decisions can be hard to find again in a long recording.",
+        "A useful summary needs more than a wall of transcription text.",
       ],
       whatIBuiltLines: [
-        "Chunked audio processing pipeline with OpenAI Whisper transcription.",
-        "GPT-4o prompt chain extracting structured JSON action items and owners.",
-        "Searchable archive linking decision logs back to timestamped audio.",
+        "Explored transcribing audio with Whisper and summarizing it with an LLM.",
+        "Designed the output around decisions and follow-up actions.",
+        "This is still a prototype; integrations listed below are planned.",
       ],
       stack: ["Python", "OpenAI Whisper API", "GPT-4o", "Next.js", "PostgreSQL"],
       status: "Prototype / Active Dev",
@@ -198,9 +172,7 @@ export const siteContent: SwissSiteContent = {
         "Gmail briefing digest dispatch (Planned)",
         "Live WebSocket streaming transcription (Planned)",
       ],
-      links: {
-        github: "https://github.com/NARS77",
-      },
+      links: {},
       theme: {
         bg: "#EAD9A0", // Butter
         text: "#1B1B1A",
@@ -228,18 +200,18 @@ export const siteContent: SwissSiteContent = {
       slug: "skillsphere",
       number: "04",
       name: "SKILLSPHERE",
-      oneLiner: "Learning management system with role-based authorization and modular progress tracking.",
+      oneLiner: "A learning platform I’m building around courses, roles, and progress.",
       problemLines: [
-        "Learning platforms need strict boundary checks between instructors and students.",
-        "Uncontrolled access can lead to unassigned course edits or grade tampering.",
+        "Students and instructors need different access to course tools.",
+        "Course progress needs to be recorded against the right learner and lesson.",
       ],
       whatIBuiltLines: [
-        "Hierarchical course schema (Courses → Modules → Lessons) in PostgreSQL.",
-        "Custom DRF permission classes enforcing strict endpoint authorization.",
-        "Atomic lesson progress tracking with instructor grading dashboards.",
+        "Built the course, module, and lesson structure.",
+        "Added role-based permissions to the Django REST API.",
+        "The project is in development; the repository has the current state.",
       ],
       stack: ["Python", "Django", "Django REST Framework", "PostgreSQL", "JavaScript", "Bootstrap 5"],
-      status: "Architecture & Foundation (In Development)",
+      status: "In development",
       links: {
         github: "https://github.com/NARS77/SkillsSphere",
       },
@@ -256,37 +228,43 @@ export const siteContent: SwissSiteContent = {
           detail: "Student and instructor authenticated sessions",
         },
         processing: {
-          title: "RBAC & SERIALIZERS",
-          detail: "DRF custom permission classes enforce endpoint boundaries",
-          subdetail: "Hierarchical foreign-key cascade validation in PostgreSQL",
+          title: "ROLES & API",
+          detail: "Different permissions for students and instructors",
+          subdetail: "Django REST Framework",
         },
         output: {
           title: "PROGRESS TRACKING",
-          detail: "Atomic lesson completion records & instructor dashboards",
+          detail: "Course and lesson progress",
         },
       },
+    },
+    {
+      slug: "portfolio", number: "05", name: "THIS PORTFOLIO",
+      oneLiner: "The site you’re reading: project notes, interactive examples, and a small live-status system.",
+      problemLines: ["Project descriptions need enough detail to be useful.", "A live activity status should not stay visible indefinitely after updates stop."],
+      whatIBuiltLines: ["Built the public pages with Next.js and TypeScript.", "Added an authenticated status editor, webhook input, and expiring storage.", "Added build notes, a socket-rule demo, and automated checks for critical behavior."],
+      stack: ["Next.js", "TypeScript", "Tailwind CSS", "Upstash Redis", "Node.js tests"],
+      status: "In progress", links: { github: "https://github.com/NARS77/nawab-is-a.dev" },
+      theme: { bg: "#EAD9A0", text: "#1B1B1A", rule: "#1B1B1A", badgeBg: "#1B1B1A", badgeText: "#F4F1EA" },
+      diagram: {
+        input: { title: "STATUS UPDATE", detail: "Admin session or webhook secret" },
+        processing: { title: "AUTH & STORAGE", detail: "Validate, save, and expire", subdetail: "Redis TTL or local development storage" },
+        output: { title: "PUBLIC STATUS", detail: "Current activity, hidden on expiry" }
+      }
     },
   ],
   stack: [
     {
-      category: "Frontend",
-      items: ["React", "Next.js", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3 / Tailwind CSS", "Bootstrap", "Interactive SVG"],
+      category: "Interface",
+      items: ["React", "Next.js", "TypeScript"],
     },
     {
-      category: "Backend",
-      items: ["Python 3.12", "Django 5.x", "Django REST Framework", "Node.js", "Express.js", "REST APIs", "Nginx", "Gunicorn"],
+      category: "Server",
+      items: ["Python", "Django", "Django REST Framework", "REST APIs"],
     },
     {
-      category: "Databases",
-      items: ["PostgreSQL", "MySQL", "MongoDB", "psycopg2-binary"],
-    },
-    {
-      category: "AI & Automation",
-      items: ["OpenAI API", "OpenAI Whisper", "Prompt Chaining", "Structured JSON Output", "TextBlob NLP", "Data Ingestion Pipelines"],
-    },
-    {
-      category: "Tools & Infrastructure",
-      items: ["Docker", "Docker Compose", "Git / GitHub", "Linux / Bash", "Postman", "Vercel"],
+      category: "Data & AI",
+      items: ["PostgreSQL", "OpenAI API", "TextBlob"],
     },
   ],
   contact: {

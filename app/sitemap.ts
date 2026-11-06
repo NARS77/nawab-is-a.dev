@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1.0,
     },
+    { url: `${baseUrl}/notes`, changeFrequency: "monthly", priority: 0.6 },
     ...projectUrls,
   ];
 }

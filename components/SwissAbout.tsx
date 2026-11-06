@@ -1,82 +1,83 @@
 import React from "react";
-import { siteContent } from "@/content/site";
-import MagneticElement from "@/components/MagneticElement";
+import { currentWork } from "@/content/current";
 import InteractiveVariableHeading from "@/components/InteractiveVariableHeading";
 
 export default function SwissAbout() {
   return (
-    <section id="about" className="w-full bg-[#F4F1EA] text-[#1B1B1A] border-b-4 border-[#1B1B1A] px-4 sm:px-8 py-12 sm:py-20">
-      {/* Section Header */}
+    <section
+      id="about"
+      className="w-full bg-[#F4F1EA] text-[#1B1B1A] border-b-4 border-[#1B1B1A] px-4 sm:px-8 py-12 sm:py-20"
+    >
       <div className="border-b-2 border-[#1B1B1A] pb-4 mb-8 sm:mb-12">
         <InteractiveVariableHeading
-          text="ABOUT NAWAB SHAIKH"
+          text="HOW I WORK"
           as="h2"
           radius={220}
           className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter"
         />
       </div>
 
-      {/* Grid: Short Narrative (<40 words) & Verified Facts */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-        {/* Narrative (<40 words, strictly factual) */}
-        <div className="lg:col-span-7 space-y-6">
-          <p className="text-xl sm:text-2xl font-medium tracking-tight leading-relaxed max-w-2xl">
-            {siteContent.author.aboutText}
+        <div className="lg:col-span-7">
+          <p className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight max-w-2xl">
+            I build the whole thing.
           </p>
-
-          <div className="flex flex-wrap items-center gap-4 pt-2 text-xs sm:text-sm font-bold uppercase tracking-wider">
-            <MagneticElement pullFactor={0.2}>
-              <a
-                href={siteContent.author.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                download="Nawab_Shaikh_Resume.pdf"
-                className="border-2 border-[#1B1B1A] px-4 py-2 hover:bg-[#1B1B1A] hover:text-[#F4F1EA] transition-colors inline-block"
-              >
-                Download Resume (PDF) ↓
-              </a>
-            </MagneticElement>
-
-            <MagneticElement pullFactor={0.2}>
-              <a
-                href="/cruxx_experience_letter.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-2 border-[#1B1B1A] px-4 py-2 hover:bg-[#1B1B1A] hover:text-[#F4F1EA] transition-colors inline-block"
-              >
-                Cruxx AI Record (PDF) ↗
-              </a>
-            </MagneticElement>
-          </div>
+          <p className="mt-5 text-lg sm:text-xl font-medium leading-relaxed max-w-2xl">
+            The personal projects here are mine end to end. I start by looking for a
+            problem, then build an interface, API, and data model around a
+            possible fix. The project pages show those parts and link to the
+            code.
+          </p>
+          <p className="mt-5 text-sm sm:text-base leading-relaxed max-w-2xl opacity-80">
+            I am a programmer based in India. I studied Computer Science
+            Engineering, with a focus on AI and Data Science, at PVPIT Sangli.
+          </p>
         </div>
 
-        {/* Structured Credentials */}
-        <div className="lg:col-span-5 space-y-3">
-          <div className="border-2 border-[#1B1B1A] p-4 bg-white/60 space-y-1">
+        <div className="lg:col-span-5 border-t-2 lg:border-t-0 lg:border-l-2 border-[#1B1B1A] pt-5 lg:pt-0 lg:pl-6 space-y-6">
+          <div>
+            <div className="text-[10px] font-bold uppercase tracking-widest opacity-60">Current role</div>
+            <h3 className="mt-2 text-lg font-bold">{currentWork.role}</h3>
+            <a href={currentWork.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Meatndoor ↗</a>
+            <p className="mt-2 text-xs opacity-70">{currentWork.tenure}</p>
+            <ul className="mt-4 space-y-2 text-sm leading-relaxed list-disc pl-4">
+              {currentWork.contributions.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+          <div className="border-t border-[#1B1B1A]/30 pt-5">
             <div className="text-[10px] font-bold uppercase tracking-widest opacity-60">
-              WORK EXPERIENCE
+              Previously
             </div>
-            <div className="text-sm sm:text-base font-bold">Cruxx AI — Software Engineer Intern</div>
-            <div className="text-xs opacity-75">Sept 2024 – May 2025 · New Delhi, India</div>
-            <div className="text-xs font-mono opacity-80 pt-1">
-              Stack: React, Django, Python, PostgreSQL, REST APIs
-            </div>
+            <p className="mt-2 text-base font-bold">
+              Software Engineer Intern · Cruxx AI
+            </p>
+            <p className="mt-1 text-sm leading-relaxed opacity-80">
+              September 2024 – May 2025. Worked across React, Django, Python,
+              PostgreSQL, and REST APIs.
+            </p>
           </div>
 
-          <div className="border-2 border-[#1B1B1A] p-4 bg-white/60 space-y-1">
+          <div className="border-t border-[#1B1B1A]/30 pt-5">
             <div className="text-[10px] font-bold uppercase tracking-widest opacity-60">
-              FORMAL EDUCATION
+              Outside the editor
             </div>
-            <div className="text-sm sm:text-base font-bold">B.Tech in CSE (AI & Data Science)</div>
-            <div className="text-xs opacity-75">PVPIT Sangli (Graduating 2025) · CGPA 7.5 / 10</div>
+            <p className="mt-2 text-base font-bold">
+              Event Manager & Treasurer · NIRMIT 2024
+            </p>
+            <p className="mt-1 text-sm leading-relaxed opacity-80">
+              Helped run an inter-college engineering festival involving more
+              than 20 colleges and nine departments.
+            </p>
           </div>
 
-          <div className="border-2 border-[#1B1B1A] p-4 bg-white/60 space-y-1">
-            <div className="text-[10px] font-bold uppercase tracking-widest opacity-60">
-              DIPLOMA IN CSE
-            </div>
-            <div className="text-sm sm:text-base font-bold">PVPIT Sangli (2022) · 84.0%</div>
-          </div>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block border-b-2 border-[#1B1B1A] pb-1 text-xs font-bold uppercase tracking-wider hover:pr-2 transition-[padding]"
+          >
+            More background in my résumé ↗
+          </a>
         </div>
       </div>
     </section>

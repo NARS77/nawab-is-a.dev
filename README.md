@@ -1,44 +1,27 @@
-# Nawab Shaikh — Personal Engineering Portfolio
+# Nawab Shaikh — Portfolio
 
-A production-grade personal portfolio built with **Next.js 15 (App Router)**, **TypeScript**, and **Tailwind CSS**. Designed with a typography-first editorial aesthetic, zero AI slop, zero fabricated metrics, and rigorous technical case studies.
+This is my portfolio site. I built it with **Next.js**, **TypeScript**, and **Tailwind CSS** to show the projects I’ve worked on and how I approach building software.
 
----
+I usually start by looking for a problem I can fix. The project pages describe what I built and link to the source or demo where available. Work in progress is labeled as such.
 
-## 🧭 Design Philosophy
+## Projects
 
-- **Zero AI Slop**: No purple/blue gradient blobs, no floating cards without purpose, no fake terminal decorations, no glowing orbs, and no generic marketing copy.
-- **Typography-First & Editorial**: Deep matte palette (`#0B0C0E`), crisp 1px borders, monospace metadata kickers, and clear hierarchy.
-- **Architectural Depth**: Interactive system architecture viewer showcasing data lifecycles, database entities, and engineering trade-offs.
-- **Verified Authenticity**: Every claim, milestone, and technical contribution is grounded in real source code, repositories, and verified records.
+- **[RigSmith](https://github.com/NARS77/RigSmith)** — A PC builder with component compatibility checks and an interactive SVG view. [Demo](https://rigsmith20.vercel.app/)
+- **[SentimentSphere](https://github.com/NARS77/SentimentSphere)** — A Django app for analyzing customer feedback with TextBlob and the OpenAI API.
+- **[SkillSphere](https://github.com/NARS77/SkillsSphere)** — A learning platform project, currently in development.
+- **EchoTrace** — A meeting transcription and notes prototype.
 
----
-
-## 🚀 Featured Projects & Systems
-
-1. **[RigSmith](https://github.com/NARS77/RigSmith)** — Full-Stack PC Builder & Multidimensional Compatibility Engine
-   - *Stack*: React 18, Vite 6, Django 5.x, Django REST Framework, PostgreSQL, Docker, SVG component schematics.
-   - *Architecture*: Rule-based multi-attribute compatibility engine, dynamic GPU transient wattage curve calculation, and live interactive SVG chassis blueprints.
-2. **[SentimentSphere](https://github.com/NARS77/SentimentSphere)** — AI-Powered Customer Feedback Intelligence Platform
-   - *Stack*: Python 3.12, Django 5.2, Django REST Framework, PostgreSQL, OpenAI API (v1.12), TextBlob, Pandas, Highcharts.
-   - *Architecture*: Dual-layer NLP pipeline (TextBlob lexical scoring + OpenAI prompt template engine) with asynchronous batch state machines.
-3. **Cruxx AI — Production Full-Stack Engineering** (Verified Internship, Sept 2024 – May 2025)
-   - *Stack*: React, Django, Python, PostgreSQL, REST APIs.
-   - *Contributions*: Production feature delivery, authenticated endpoints, and database query optimization.
-4. **EchoTrace** — AI-Powered Meeting Memory & Structured Synthesis (Prototype / Active Dev)
-   - *Stack*: Python, OpenAI Whisper, GPT-4o / LLM APIs, Next.js, PostgreSQL.
-5. **[SkillSphere](https://github.com/NARS77/SkillsSphere)** — Role-Based Learning Management Architecture
-   - *Stack*: Django, Django REST Framework, PostgreSQL, Bootstrap.
+I also include my experience at Cruxx AI and links to my résumé and contact details.
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Framework**: [Next.js 15.5](https://nextjs.org/) (App Router, Server Components & Static Site Generation)
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **Language**: TypeScript 5.7 (Strict Mode)
 - **Styling**: Tailwind CSS 3.4 (Custom semantic tokens)
-- **Icons**: Lucide React + Custom SVG Brand Nodes
-- **SEO & Structured Data**: JSON-LD Person & WebSite schema, OpenGraph, `robots.ts`, and `sitemap.ts`
-- **Verified Assets**: Pre-bundled `/public/resume.pdf` (184 KB) and `/public/cruxx_experience_letter.pdf` (550 KB)
+- **Page metadata**: OpenGraph, `robots.ts`, and `sitemap.ts`
+- **Documents**: Résumé and Cruxx AI internship letter in `public/`
 
 ---
 
@@ -84,3 +67,21 @@ docker run -p 3000:3000 nawab-portfolio
 - **Location**: Mira Road, Maharashtra, India (Open to relocation & remote roles)
 - **GitHub**: [github.com/NARS77](https://github.com/NARS77)
 - **LinkedIn**: [linkedin.com/in/nars77](https://linkedin.com/in/nars77)
+
+## Current experience and updates
+
+Meatndoor: AI Engineer & Full-Stack AI Developer, about six months as of November 2026. Contributions include the iOS and Android app, dashboard work, and generative product images. These are separate from the personal projects shown here.
+
+Edit `content/current.ts` to update the current-role section. Project progress and build notes live in `content/projectNotes.ts`. The RigSmith walkthrough links to a fixed source revision; its interactive example implements only the socket rule.
+
+## Checks
+
+Run `npm run check` for TypeScript and behavior tests, then `npm run build`. The GitHub workflow performs those steps on pushes and pull requests. Tests use fake credentials and mocked storage; they do not contact production email or Redis services.
+
+## Local preview
+
+Run `npm run preview:local` if the original folder path causes bundler errors. It synchronizes the current source into `/tmp/nawab_portfolio_preview`, copies `.env.local` locally with restricted permissions, installs dependencies when the lockfile changes, and starts port 3001. Stop the existing preview first. Rerun this command after editing the original source; the temporary directory is a snapshot, not the source of truth.
+
+Use `npm run check:local` to run tests and a production build from a clean path without loading `.env.local`. This is useful when the original folder name contains `?`, which also affects the TypeScript test loader.
+
+Next.js stays on version 15. The package override updates its nested PostCSS dependency within version 8 to address dependency advisories; review it when upgrading Next.js.

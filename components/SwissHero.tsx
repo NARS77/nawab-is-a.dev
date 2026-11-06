@@ -26,7 +26,7 @@ export default function SwissHero({ status }: SwissHeroProps) {
           </span>
         </div>
 
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
           <a
             href="#work"
             className="hover:underline underline-offset-4 decoration-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B1B1A]"
@@ -51,6 +51,7 @@ export default function SwissHero({ status }: SwissHeroProps) {
           >
             Contact
           </a>
+          <a href="/notes" className="hover:underline underline-offset-4 decoration-2">Build notes</a>
           <MagneticElement pullFactor={0.25}>
             <a
               href={siteContent.author.resumeUrl}
@@ -105,13 +106,10 @@ export default function SwissHero({ status }: SwissHeroProps) {
             </MagneticElement>
             <MagneticElement pullFactor={0.15}>
               <a
-                href={siteContent.author.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                download="Nawab_Shaikh_Resume.pdf"
+                href="#about"
                 className="inline-flex items-center justify-between border-b-2 border-[#1B1B1A] pb-1 hover:pl-2 transition-all w-full"
               >
-                <span>Download Resume</span>
+                <span>How I Work</span>
                 <span>↓</span>
               </a>
             </MagneticElement>

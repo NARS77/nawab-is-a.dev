@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { siteContent, SwissProject } from "@/content/site";
+import ProjectEvidence from "@/components/ProjectEvidence";
 import SwissDiagram from "@/components/SwissDiagram";
 import InteractiveVariableHeading from "@/components/InteractiveVariableHeading";
 import type { Metadata } from "next";
@@ -41,7 +42,7 @@ export default async function ProjectDetailPage({
 
   return (
     <div
-      className="min-h-screen w-full select-none"
+      className="min-h-screen w-full"
       style={{
         backgroundColor: theme.bg,
         color: theme.text,
@@ -64,7 +65,7 @@ export default async function ProjectDetailPage({
         </div>
       </header>
 
-      <main className="px-4 sm:px-8 py-10 sm:py-16 max-w-7xl mx-auto space-y-10 sm:space-y-14">
+      <main id="main-content" className="px-4 sm:px-8 py-10 sm:py-16 max-w-7xl mx-auto space-y-10 sm:space-y-14">
         {/* Banner */}
         <div className="space-y-4">
           <div className="flex items-center gap-4 text-xs sm:text-sm font-bold uppercase tracking-wider">
@@ -165,10 +166,12 @@ export default async function ProjectDetailPage({
           </div>
         </section>
 
+        <ProjectEvidence slug={project.slug} />
+
         {/* Stack (short lines / tags) */}
         <section className="pt-6 border-t-2 space-y-3" style={{ borderColor: theme.rule }}>
           <div className="text-xs font-bold uppercase tracking-widest opacity-80">
-            Verified Stack
+            Tools I used
           </div>
           <div className="flex flex-wrap gap-2">
             {project.stack.map((item) => (
