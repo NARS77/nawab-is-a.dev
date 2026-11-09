@@ -34,7 +34,7 @@ export default function SwissContact() {
       {/* Section Header */}
       <div className="border-b-2 border-[#F4F1EA] pb-4 mb-8 sm:mb-12">
         <InteractiveVariableHeading
-          text="CONTACT"
+          text="Let’s talk"
           as="h2"
           radius={200}
           className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter"
@@ -61,7 +61,7 @@ export default function SwissContact() {
             </div>
 
             <div className="border-2 border-[#F4F1EA] p-4 space-y-2">
-              <div className="text-[10px] opacity-60">CHANNELS & ASSETS</div>
+              <div className="text-[10px] opacity-60">Elsewhere</div>
               <div className="flex flex-col gap-2">
                 <a
                   href={siteContent.contact.github}
@@ -128,7 +128,7 @@ export default function SwissContact() {
 
             <div className="space-y-1">
               <label htmlFor="message" className="block opacity-75">
-                Message / Scope
+                Message
               </label>
               <textarea
                 id="message"
@@ -137,7 +137,7 @@ export default function SwissContact() {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full bg-[#1B1B1A] border-2 border-[#F4F1EA] p-3 text-[#F4F1EA] placeholder:opacity-30 focus:outline-none focus:bg-stone-900 resize-none font-normal"
-                placeholder="Project requirements, role scope, or engineering details..."
+                placeholder="What would you like to work on?"
               />
             </div>
 

@@ -1,13 +1,16 @@
-import React from "react";
-import { siteContent, SwissProject } from "@/content/site";
-import ProjectFieldItem from "@/components/ProjectFieldItem";
+import Link from "next/link";
+import { siteContent } from "@/content/site";
+import SocketDemo from "@/components/SocketDemo";
 
 export default function SwissProjects() {
-  return (
-    <section id="work" className="w-full">
-      {siteContent.projects.filter(project => project.slug !== "portfolio").map((project: SwissProject) => (
-        <ProjectFieldItem key={project.slug} project={project} />
-      ))}
-    </section>
-  );
+  const featured = ["rigsmith", "sentimentsphere"].map(slug => siteContent.projects.find(p => p.slug === slug)!);
+  const developing = siteContent.projects.filter(p => ["echotrace", "skillsphere"].includes(p.slug));
+  return <section id="work" className="page-shell section-space border-t border-current/20">
+    <div className="section-heading"><h2>Selected work</h2><p className="text-sm text-muted">Personal projects, built end to end.</p></div>
+    {featured.map((project, index) => <article key={project.slug} className="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-16 py-10 sm:py-14 border-b border-current/20">
+      <div><p className="eyebrow mb-5">0{index + 1} / {project.slug === "rigsmith" ? "PC building" : "Feedback analysis"}</p><h3 className="text-3xl sm:text-4xl tracking-tight font-medium">{project.slug === "rigsmith" ? "RigSmith" : "SentimentSphere"}</h3><p className="mt-5 text-lg leading-relaxed text-muted">{project.oneLiner}</p><p className="mt-5 text-sm leading-relaxed">{project.whatIBuiltLines[1]}</p><p className="mt-6 text-xs text-muted leading-relaxed">{project.stack.slice(0, 4).join(" / ")}</p><Link href={`/projects/${project.slug}`} className="action-link mt-7">Explore the project ↗</Link><div className="mt-5 flex gap-5 text-sm text-muted">{project.links.github && <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Source code</a>}{project.links.demo && <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Live app ↗</a>}</div></div>
+      <div className="project-surface">{project.slug === "rigsmith" ? <><p className="eyebrow mb-5">Try a compatibility rule</p><SocketDemo /></> : <><p className="eyebrow mb-8">Inside the application</p><div className="space-y-7">{[{label:"01 / Feedback",text:"Customer reviews, collected for batch analysis."},{label:"02 / Analysis",text:"TextBlob scores sentiment. OpenAI groups recurring themes."},{label:"03 / Patterns",text:"Charts bring sentiment and review patterns into view."}].map(item => <div key={item.label} className="border-t border-current/20 pt-4"><h4 className="text-sm font-medium">{item.label}</h4><p className="mt-2 text-sm leading-relaxed text-muted">{item.text}</p></div>)}</div><p className="mt-8 text-xs text-muted">Application flow · source available on GitHub</p></>}</div>
+    </article>)}
+    <div className="pt-12"><div className="section-heading"><h2 className="!text-2xl">On the workbench</h2><p className="text-sm text-muted">Still taking shape.</p></div><div className="grid sm:grid-cols-2 gap-8">{developing.map(p => <article key={p.slug} className="border-t border-current/20 pt-5"><p className="eyebrow">{p.status}</p><h3 className="mt-3 text-xl font-medium">{p.slug === "echotrace" ? "EchoTrace" : "SkillSphere"}</h3><p className="text-muted mt-3 leading-relaxed">{p.oneLiner}</p><Link href={`/projects/${p.slug}`} className="inline-block mt-5 text-sm underline underline-offset-4">Current state & next steps ↗</Link></article>)}</div></div>
+  </section>;
 }

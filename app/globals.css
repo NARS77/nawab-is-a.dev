@@ -6,6 +6,9 @@
   --bg: #F4F1EA;
   --text-main: #1B1B1A;
   --border-thick: #1B1B1A;
+  --muted: #64645c;
+  --accent: #56634c;
+  --surface: #eaece4;
 }
 
 html {
@@ -32,9 +35,32 @@ body {
 
 /* High-contrast focus state */
 :focus-visible {
-  outline: 3px solid #1B1B1A;
+  outline: 3px solid #7c936e;
   outline-offset: 3px;
 }
+
+.page-shell { width: min(100% - 3rem, 1200px); margin-inline: auto; }
+.section-space { padding-block: clamp(3rem, 7vw, 6rem); }
+.text-muted { color: var(--muted); }
+.eyebrow { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+.action-link { display: inline-flex; align-items: center; gap: 2rem; padding-bottom: .5rem; border-bottom: 1px solid var(--accent); font-size: .9rem; color: var(--accent); }
+.section-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 2rem; }
+.section-heading h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -.04em; }
+.project-surface { padding: clamp(1.25rem, 3vw, 2.5rem); background: var(--surface); border: 1px solid #1b1b1a18; }
+.project-surface #try-it { border: 0; padding: 0; background: transparent; }
+.project-surface #socket-title { font-size: 1.5rem; font-weight: 500; }
+.project-surface #try-it > p:first-child { display: none; }
+.project-surface #try-it p { font-size: .875rem; line-height: 1.65; }
+.project-surface #try-it .border-2 { border-width: 1px; border-color: #1b1b1a40; }
+#about, #stack { width: min(100% - 3rem, 1200px); margin-inline: auto; padding-inline: 0; border-bottom-width: 1px; border-color: #1b1b1a30; }
+#about h2, #stack h2, #contact h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 500; text-transform: none; letter-spacing: -.04em; }
+#about .border-b-2, #stack .border-b-2, #contact .border-b-2 { border-bottom-width: 1px; }
+#contact { padding-inline: max(1.5rem, calc((100vw - 1200px) / 2)); }
+#contact .border-2 { border-width: 1px; border-color: #f4f1ea50; }
+#contact :focus-visible { outline-color: #b8cdb4; }
+a, button { text-underline-offset: 4px; }
+nav a:hover, .action-link:hover { color: var(--accent); }
+@media (max-width: 480px) { .page-shell, #about, #stack { width: calc(100% - 2rem); } }
 
 ::selection {
   background: #1B1B1A;

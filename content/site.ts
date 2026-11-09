@@ -98,7 +98,7 @@ export const siteContent: SwissSiteContent = {
           detail: "Customer reviews and feedback",
         },
         processing: {
-          title: "DUAL-LAYER NLP",
+          title: "SENTIMENT & THEMES",
           detail: "TextBlob sentiment scoring and OpenAI theme grouping",
           subdetail: "Batch analysis in a Django application",
         },
@@ -146,7 +146,7 @@ export const siteContent: SwissSiteContent = {
           subdetail: "Results update as parts are selected",
         },
         output: {
-          title: "VERIFIED SYSTEM BUILD",
+          title: "BUILD OVERVIEW",
           detail: "A parts list and visual build overview",
         },
       },
@@ -187,8 +187,8 @@ export const siteContent: SwissSiteContent = {
         },
         processing: {
           title: "WHISPER STT + LLM",
-          detail: "Timestamped dialogue transcription → JSON schema prompt chains",
-          subdetail: "Strict extraction of decision logs and assigned owners",
+          detail: "Exploring transcription and summarization",
+          subdetail: "Prototype workflow",
         },
         output: {
           title: "STRUCTURED MINUTES",

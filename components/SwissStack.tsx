@@ -10,7 +10,7 @@ export default function SwissStack() {
     >
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 border-b-2 border-[#1B1B1A] pb-4 mb-8">
         <InteractiveVariableHeading
-          text="TOOLS I USE"
+          text="Tools I use"
           as="h2"
           radius={220}
           className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter"

@@ -10,7 +10,7 @@ export default function SwissAbout() {
     >
       <div className="border-b-2 border-[#1B1B1A] pb-4 mb-8 sm:mb-12">
         <InteractiveVariableHeading
-          text="HOW I WORK"
+          text="A little about me"
           as="h2"
           radius={220}
           className="text-3xl sm:text-5xl font-bold uppercase tracking-tighter"
@@ -20,7 +20,7 @@ export default function SwissAbout() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         <div className="lg:col-span-7">
           <p className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight max-w-2xl">
-            I build the whole thing.
+            From the first idea to the parts behind it.
           </p>
           <p className="mt-5 text-lg sm:text-xl font-medium leading-relaxed max-w-2xl">
             The personal projects here are mine end to end. I start by looking for a

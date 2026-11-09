@@ -44,7 +44,7 @@ export default async function ProjectDetailPage({
     <div
       className="min-h-screen w-full"
       style={{
-        backgroundColor: theme.bg,
+        backgroundColor: "var(--bg)",
         color: theme.text,
       }}
     >
@@ -87,7 +87,7 @@ export default async function ProjectDetailPage({
             text={project.name}
             as="h1"
             radius={260}
-            className="text-[10vw] sm:text-[11vw] font-bold leading-[0.88] tracking-tighter uppercase break-words"
+            className="text-4xl sm:text-6xl font-medium leading-tight tracking-tight break-words"
           />
 
           <p className="text-lg sm:text-2xl font-bold tracking-tight max-w-4xl leading-snug">
